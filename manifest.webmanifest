@@ -1,0 +1,12 @@
+{
+  "name": "Ficha de Inspección - Grupo Vargo",
+  "short_name": "Ficha Grupo Vargo",
+  "description": "Ficha de inspección técnica de inmuebles de Grupo Vargo.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#F5F7F6",
+  "theme_color": "#050A1A",
+  "orientation": "portrait-primary",
+  "lang": "es-PE",
+  "icons": []
+}

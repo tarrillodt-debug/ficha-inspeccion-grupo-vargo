@@ -1,0 +1,1610 @@
+<!doctype html><html lang='es'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><meta name='theme-color' content='#087f3e'><title>Ficha de Inspección - Grupo Vargo</title><style>
+*{box-sizing:border-box}body{margin:0;background:#f4f6f5;font-family:Arial,sans-serif;color:#17201b}.bar{position:sticky;top:0;z-index:10;background:#087f3e;color:#fff;padding:14px;display:flex;gap:12px;align-items:center;box-shadow:0 2px 7px #0003}.bar b{font-size:18px;flex:1}.tabs{position:sticky;top:53px;z-index:9;background:#fff;display:flex;overflow:auto;border-bottom:1px solid #ddd}.tab{min-width:90px;padding:12px 7px;border:0;background:#fff;font-size:12px;font-weight:bold;color:#46524b;border-bottom:3px solid transparent}.tab.on{color:#087f3e;border-bottom-color:#087f3e}main{max-width:760px;margin:auto;padding:10px 10px 85px}.sec{background:#fff;border:1px solid #d9dfdc;border-radius:12px;margin:10px 0;overflow:hidden}.sec h2{margin:0;padding:11px 13px;background:#087f3e;color:white;font-size:14px}.body{padding:10px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.f{margin-bottom:7px}.f.full{grid-column:1/-1}label{display:block;font-size:12px;font-weight:bold;color:#46524b;margin-bottom:4px}input,select,textarea{width:100%;padding:10px;border:1px solid #cbd4cf;border-radius:7px;font-size:14px;background:white}textarea{min-height:80px}.tbl{overflow:auto}.tbl table{width:100%;min-width:600px;border-collapse:collapse}.tbl th,.tbl td{border:1px solid #ccd6cf;padding:6px;text-align:center;font-size:12px}.tbl th{background:#e5f2e9;color:#175a34}.tbl input{padding:7px}.readonly{background:#eef7f1!important;color:#087f3e;font-weight:bold;text-align:center}.card{border:1px solid #d9dfdc;border-radius:9px;padding:10px;margin:9px 0}.head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;color:#087f3e;font-weight:bold}.btn{padding:10px 13px;border-radius:8px;border:1px solid #087f3e;background:white;color:#087f3e;font-weight:bold}.btn.g{background:#087f3e;color:white}.btn.r{color:#b42318;border-color:#e1b6b1}.actions{display:flex;gap:8px;flex-wrap:wrap}.hint{font-size:12px;color:#66736b}.sum{background:#eef7f1;border-radius:8px;padding:10px;margin-top:8px;font-size:13px}.warn{background:#fff4e5;border:1px solid #efc889;color:#8a4b00;border-radius:8px;padding:9px;font-size:12px;margin:8px 0}.photo{border:1px dashed #adbab2;padding:9px;border-radius:8px;margin:8px 0}.photo img{width:100%;max-height:240px;object-fit:cover;border-radius:7px;margin-top:7px}.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #ddd;padding:8px;display:flex;gap:8px;z-index:20}.bottom button{flex:1}.hide{display:none}@media(max-width:560px){.grid{grid-template-columns:1fr}.f.full{grid-column:auto}.bar b{font-size:16px}}@media print{.bar,.tabs,.bottom,.noprint{display:none!important}main{max-width:none;padding:0}.sec{break-inside:avoid}input,select,textarea{border:0;padding:2px}.sec h2{background:#087f3e!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+ .subsection{margin-top:12px;border:1px solid #d8e0db;border-radius:9px;padding:10px;background:#fbfdfb}.subsection h3{margin:0 0 9px;color:#087f3e;font-size:13px}.obra-capacity{margin-top:8px}.obra-litros{background:#eef7f1;font-weight:700;color:#087f3e}
+#printAll{display:none}
+@media print{
+  body.printingAll{background:#fff!important}
+  body.printingAll>header,
+  body.printingAll>.tabs,
+  body.printingAll>main,
+  body.printingAll>.bottom{display:none!important}
+  body.printingAll #printAll{display:block!important;padding:0 10px!important}
+  body.printingAll #printAll .sec{break-inside:auto;page-break-after:auto;margin-bottom:14px}
+  body.printingAll #printAll .sec h2{break-after:avoid;page-break-after:avoid}
+  body.printingAll #printAll .card{break-inside:avoid}
+  body.printingAll #printAll table{break-inside:auto}
+  body.printingAll #printAll tr{break-inside:avoid}
+  body.printingAll #printAll img{max-width:100%;height:auto}
+  body.printingAll #printAll .noprint{display:none!important}
+}
+
+@page{size:A4 portrait;margin:12mm 11mm 14mm 11mm}
+@media print{
+  body.printingAll{background:#fff!important;font-family:Arial,Helvetica,sans-serif!important;color:#1f2937!important}
+  body.printingAll>header,body.printingAll>.tabs,body.printingAll>main,body.printingAll>.bottom{display:none!important}
+  body.printingAll #printAll{display:block!important;padding:0!important}
+  body.printingAll #printAll .print-cover{
+    display:flex!important;justify-content:space-between;align-items:flex-start;
+    border-bottom:2px solid #087f3e;padding:0 0 8px;margin-bottom:12px;
+  }
+  body.printingAll #printAll .print-cover .brand{font-size:18px;font-weight:800;color:#087f3e}
+  body.printingAll #printAll .print-cover .title{text-align:right;font-size:15px;font-weight:700;color:#333}
+  body.printingAll #printAll .print-cover .meta{font-size:9px;color:#666;margin-top:3px}
+  body.printingAll #printAll .sec{break-inside:auto;page-break-inside:auto;margin:0 0 12px!important;border:1px solid #d8dee3!important;border-radius:7px!important;box-shadow:none!important;background:#fff!important}
+  body.printingAll #printAll .sec h2{
+    background:#087f3e!important;color:#fff!important;font-size:12px!important;
+    padding:7px 9px!important;margin:0!important;border-radius:6px 6px 0 0!important;
+    break-after:avoid;page-break-after:avoid;
+  }
+  body.printingAll #printAll .body{padding:9px!important}
+  body.printingAll #printAll .hint,
+  body.printingAll #printAll button,
+  body.printingAll #printAll .btn,
+  body.printingAll #printAll .noprint,
+  body.printingAll #printAll .delete,
+  body.printingAll #printAll .r{display:none!important}
+  body.printingAll #printAll .grid{gap:7px 16px!important}
+  body.printingAll #printAll .f label{font-size:8px!important;color:#68717a!important;margin-bottom:2px!important}
+  body.printingAll #printAll input,
+  body.printingAll #printAll select,
+  body.printingAll #printAll textarea{
+    border:0!important;background:transparent!important;box-shadow:none!important;
+    padding:0!important;margin:0!important;font:inherit!important;color:#111!important;
+    appearance:none!important;-webkit-appearance:none!important;
+  }
+  body.printingAll #printAll .readonly{background:transparent!important;color:#111!important}
+  body.printingAll #printAll table{width:100%!important;border-collapse:collapse!important;font-size:8.5px!important}
+  body.printingAll #printAll th{background:#eaf3ed!important;color:#086b36!important;font-weight:700!important}
+  body.printingAll #printAll th,body.printingAll #printAll td{padding:5px!important;border:1px solid #cfd8d3!important}
+  body.printingAll #printAll .card{border:1px solid #d8dee3!important;border-radius:6px!important;padding:8px!important;margin:0 0 8px!important;break-inside:avoid!important;page-break-inside:avoid!important}
+  body.printingAll #printAll .card .head{font-size:10px!important;color:#087f3e!important;font-weight:700!important;margin-bottom:7px!important}
+  body.printingAll #printAll .sum{background:#f1f7f3!important;border:1px solid #d8e9de!important;border-radius:5px!important;padding:6px!important;font-size:9px!important}
+  body.printingAll #printAll .photo{break-inside:avoid!important;page-break-inside:avoid!important;border-bottom:1px solid #ddd;padding-bottom:8px;margin-bottom:8px}
+  body.printingAll #printAll .photo img{max-width:100%!important;max-height:180mm!important;object-fit:contain!important}
+  body.printingAll #printAll .print-footer{font-size:8px;color:#777;border-top:1px solid #ddd;padding-top:5px;margin-top:12px}
+}
+
+.tab.locked{opacity:.38!important;cursor:not-allowed!important;pointer-events:none!important}
+.dept-notice{margin:0 0 10px;padding:10px 12px;border:1px solid #d9e9df;border-left:4px solid #087f3e;background:#f1f8f4;border-radius:6px;color:#24513a;font-size:13px}
+
+:root{
+  --gv-navy:#050A1A;
+  --gv-teal:#4DB699;
+  --gv-teal-dark:#238A72;
+  --gv-teal-light:#EAF6F2;
+  --gv-white:#FFFFFF;
+  --gv-text:#17201B;
+  --gv-muted:#52605A;
+  --gv-border:#D5E1DC;
+  --gv-danger:#B42318;
+}
+body{background:#F4F7F6!important;color:var(--gv-text)!important}
+header,.topbar,.app-header{background:var(--gv-navy)!important}
+h1,h2,h3,.section-title,.head,.sec-head{color:var(--gv-white)}
+button,.btn.g,.tab.on,.section-head,.sec-title{background:var(--gv-teal)!important}
+.tab.on{border-bottom-color:var(--gv-teal)!important;color:var(--gv-teal)!important;background:var(--gv-white)!important}
+.tab:hover{color:var(--gv-teal)!important}
+.card,.section,.box{border-color:var(--gv-border)!important}
+.sum{background:var(--gv-teal-light)!important;border-color:#CBE8DE!important}
+input:focus,select:focus,textarea:focus{border-color:var(--gv-teal)!important;box-shadow:0 0 0 2px rgba(77,182,153,.16)!important}
+.btn.r{color:var(--gv-danger)!important}
+a{color:var(--gv-teal)!important}
+
+#print{--gv-navy:#050A1A;--gv-teal:#4DB699;--gv-teal-light:#EAF6F2}
+#print .pdf-head{border-bottom:2px solid #4DB699!important}
+#print .pdf-brand{color:#4DB699!important}
+#print .pdf-title{color:#050A1A!important}
+#print .pdf-section-title{background:#4DB699!important;color:#FFFFFF!important}
+#print table th{background:#EAF6F2!important;color:#050A1A!important}
+#print .sum{background:#EAF6F2!important;border-color:#CBE8DE!important}
+
+/* ===== IDENTIDAD CORPORATIVA GRUPO VARGO ===== */
+:root{
+  --gv-navy:#050A1A;
+  --gv-teal:#4DB699;
+  --gv-teal-dark:#238A72;
+  --gv-teal-light:#EAF6F2;
+  --gv-text:#17201B;
+  --gv-muted:#52605A;
+  --gv-border:#D5E1DC;
+}
+body{background:#F4F7F6!important;color:var(--gv-text)!important}
+.bar{
+  background:var(--gv-navy)!important;
+  color:#fff!important;
+  border-bottom:3px solid var(--gv-teal)!important;
+}
+.tabs{
+  background:#fff!important;
+  border-bottom:1px solid var(--gv-border)!important;
+}
+.tab{
+  color:#26332E!important;
+  border-bottom:3px solid transparent!important;
+}
+.tab:hover{
+  color:var(--gv-teal)!important;
+  background:var(--gv-teal-light)!important;
+}
+.tab.on{
+  color:var(--gv-teal)!important;
+  border-bottom-color:var(--gv-teal)!important;
+  background:#fff!important;
+}
+.sec h2{
+  background:var(--gv-teal)!important;
+  color:#fff!important;
+}
+.btn.g{
+  background:var(--gv-teal)!important;
+  color:#fff!important;
+  border-color:var(--gv-teal)!important;
+}
+.btn.g:hover{
+  background:var(--gv-teal-dark)!important;
+}
+.btn:not(.g):not(.r){
+  border-color:var(--gv-teal)!important;
+  color:var(--gv-teal-dark)!important;
+  background:#fff!important;
+}
+.card,.sec,.subsection{
+  border-color:var(--gv-border)!important;
+}
+.sum{
+  background:var(--gv-teal-light)!important;
+  border-color:#CBE8DE!important;
+}
+.readonly{
+  background:var(--gv-teal-light)!important;
+}
+input:focus,select:focus,textarea:focus{
+  border-color:var(--gv-teal)!important;
+  box-shadow:0 0 0 2px rgba(77,182,153,.16)!important;
+}
+.dept-notice{
+  border-left-color:var(--gv-teal)!important;
+  background:var(--gv-teal-light)!important;
+}
+.subsection h3,.card .head{
+  color:var(--gv-teal-dark)!important;
+}
+.bottom{
+  border-top:1px solid var(--gv-border)!important;
+  background:#fff!important;
+}
+/* PDF */
+body.printingAll #printAll .sec h2{
+  background:var(--gv-teal)!important;
+  color:#fff!important;
+}
+body.printingAll #printAll .print-cover{
+  border-bottom:2px solid var(--gv-teal)!important;
+}
+body.printingAll #printAll .print-cover .brand{
+  color:var(--gv-teal)!important;
+}
+body.printingAll #printAll th{
+  background:var(--gv-teal-light)!important;
+  color:var(--gv-navy)!important;
+}
+body.printingAll #printAll .card .head{
+  color:var(--gv-teal-dark)!important;
+}
+
+/* ===== GRUPO VARGO — INFORME PDF PREMIUM ===== */
+@page{
+  size:A4;
+  margin:12mm 12mm 14mm 12mm;
+}
+body.printingAll{
+  background:#eef1f0!important;
+  color:#18221f!important;
+  font-family:Arial,Helvetica,sans-serif!important;
+}
+body.printingAll #printAll{
+  width:100%!important;
+  max-width:186mm!important;
+  margin:0 auto!important;
+  background:#fff!important;
+}
+body.printingAll #printAll .print-cover{
+  position:relative!important;
+  padding:4mm 2mm 4mm!important;
+  margin-bottom:5mm!important;
+  border-bottom:2px solid #4DB699!important;
+}
+body.printingAll #printAll .print-cover:after{
+  content:"";
+  position:absolute!important;
+  right:0!important;
+  bottom:1.5mm!important;
+  font-size:6.5px!important;
+  letter-spacing:1.2px!important;
+  color:#66736e!important;
+  font-weight:700!important;
+}
+body.printingAll #printAll .print-cover .brand{
+  color:#4DB699!important;
+  font-size:17px!important;
+  font-weight:800!important;
+  letter-spacing:.2px!important;
+}
+body.printingAll #printAll .print-cover .title{
+  color:#050A1A!important;
+  font-size:18px!important;
+  font-weight:800!important;
+  text-transform:uppercase!important;
+}
+body.printingAll #printAll .print-cover .meta{
+  color:#65716c!important;
+  font-size:7.5px!important;
+}
+body.printingAll #printAll .sec{
+  margin:0 0 5mm!important;
+  border:1px solid #d8e2de!important;
+  border-radius:8px!important;
+  background:#fff!important;
+  overflow:hidden!important;
+  box-shadow:0 1px 4px rgba(5,10,26,.05)!important;
+}
+body.printingAll #printAll .sec h2{
+  margin:0!important;
+  padding:7px 10px!important;
+  background:#050A1A!important;
+  color:#fff!important;
+  font-size:10px!important;
+  line-height:1.2!important;
+  letter-spacing:.5px!important;
+  border-left:5px solid #4DB699!important;
+  text-transform:uppercase!important;
+}
+body.printingAll #printAll .sec>.grid,
+body.printingAll #printAll .sec>div:not(.sum):not(.card):not(.print-cover){
+  /* retain existing layout */
+}
+body.printingAll #printAll .f{
+  padding:5px 8px!important;
+}
+body.printingAll #printAll .f label{
+  display:block!important;
+  margin-bottom:2px!important;
+  color:#68756f!important;
+  font-size:6.5px!important;
+  text-transform:uppercase!important;
+  letter-spacing:.35px!important;
+  font-weight:700!important;
+}
+body.printingAll #printAll .f input,
+body.printingAll #printAll .f select,
+body.printingAll #printAll .f textarea{
+  border:0!important;
+  border-bottom:1px solid #e0e6e3!important;
+  border-radius:0!important;
+  padding:2px 0!important;
+  background:transparent!important;
+  color:#16201c!important;
+  font-size:9px!important;
+  font-weight:600!important;
+  box-shadow:none!important;
+}
+body.printingAll #printAll .card{
+  border:1px solid #dbe5e1!important;
+  border-radius:7px!important;
+  background:#fbfdfc!important;
+  padding:9px!important;
+  margin:8px!important;
+  box-shadow:none!important;
+}
+body.printingAll #printAll .card .head{
+  color:#050A1A!important;
+  font-size:9px!important;
+  padding-bottom:5px!important;
+  margin-bottom:3px!important;
+  border-bottom:1px solid #dfe7e3!important;
+  text-transform:uppercase!important;
+  letter-spacing:.4px!important;
+}
+body.printingAll #printAll .sum{
+  margin:7px 8px!important;
+  background:#EAF6F2!important;
+  border:1px solid #c9e7dc!important;
+  border-radius:6px!important;
+  color:#1d4d40!important;
+  padding:7px 9px!important;
+  font-size:8px!important;
+}
+body.printingAll #printAll table{
+  width:calc(100% - 16px)!important;
+  margin:8px!important;
+  border-collapse:separate!important;
+  border-spacing:0!important;
+  border:1px solid #d6e1dd!important;
+  border-radius:6px!important;
+  overflow:hidden!important;
+  font-size:7.5px!important;
+}
+body.printingAll #printAll th{
+  background:#EAF6F2!important;
+  color:#17382f!important;
+  border-bottom:1px solid #c8ded6!important;
+  padding:6px 5px!important;
+  text-transform:uppercase!important;
+  font-size:6.8px!important;
+  letter-spacing:.25px!important;
+}
+body.printingAll #printAll td{
+  padding:5px!important;
+  border-bottom:1px solid #e5ebe8!important;
+}
+body.printingAll #printAll tr:last-child td{
+  border-bottom:0!important;
+}
+body.printingAll #printAll .readonly{
+  background:transparent!important;
+  color:#16201c!important;
+}
+body.printingAll #printAll .hint,
+body.printingAll #printAll .dept-notice,
+body.printingAll #printAll .btn,
+body.printingAll #printAll button{
+  display:none!important;
+}
+body.printingAll #printAll .print-footer{
+  margin-top:4mm!important;
+  padding-top:2mm!important;
+  border-top:1px solid #dbe3df!important;
+  color:#7a8580!important;
+  font-size:6.5px!important;
+  text-align:center!important;
+}
+
+.gv-app-logo{
+  width:142px;height:auto;max-height:48px;object-fit:contain;display:block;
+}
+.gv-app-title{
+  font-weight:700;color:#fff;font-size:16px;border-left:1px solid rgba(255,255,255,.25);
+  padding-left:12px;
+}
+body.printingAll #printAll .gv-pdf-logo{
+  width:135px;height:auto;max-height:34px;object-fit:contain;display:block;
+}
+
+/* ===== PDF V34 — CABECERA DOCUMENTAL GRUPO VARGO ===== */
+@page{size:A4 portrait;margin:11mm 12mm 14mm 12mm}
+body.printingAll #printAll{
+  max-width:186mm!important;
+  margin:0 auto!important;
+  background:#fff!important;
+}
+body.printingAll #printAll .print-cover{
+  display:flex!important;
+  justify-content:space-between!important;
+  align-items:center!important;
+  min-height:25mm!important;
+  padding:0 0 5mm!important;
+  margin:0 0 6mm!important;
+  border-bottom:2px solid #4DB699!important;
+  background:#fff!important;
+}
+body.printingAll #printAll .pdf-brand-block{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  gap:2.2mm!important;
+}
+body.printingAll #printAll .gv-pdf-logo{
+  width:76px!important;
+  height:auto!important;
+  max-height:34px!important;
+  object-fit:contain!important;
+}
+body.printingAll #printAll .pdf-brand-sub{
+  font-size:6px!important;
+  letter-spacing:.8px!important;
+  color:#6a7671!important;
+  font-weight:700!important;
+}
+body.printingAll #printAll .pdf-title-block{
+  text-align:right!important;
+  padding-left:10mm!important;
+}
+body.printingAll #printAll .pdf-title{
+  font-size:16px!important;
+  line-height:1.1!important;
+  letter-spacing:.5px!important;
+  color:#050A1A!important;
+  font-weight:800!important;
+}
+body.printingAll #printAll .pdf-type{
+  margin-top:2mm!important;
+  font-size:8px!important;
+  color:#4DB699!important;
+  font-weight:700!important;
+  text-transform:uppercase!important;
+}
+body.printingAll #printAll .pdf-date{
+  margin-top:1mm!important;
+  font-size:7px!important;
+  color:#6a7671!important;
+}
+body.printingAll #printAll .sec{
+  border:1px solid #d8e2de!important;
+  border-radius:5px!important;
+  box-shadow:none!important;
+  margin-bottom:4.5mm!important;
+  overflow:hidden!important;
+}
+body.printingAll #printAll .sec h2{
+  background:#050A1A!important;
+  border-left:4px solid #4DB699!important;
+  border-radius:0!important;
+  padding:6px 9px!important;
+  font-size:9px!important;
+  letter-spacing:.45px!important;
+}
+body.printingAll #printAll .card{
+  background:#fff!important;
+  border:1px solid #dfe7e3!important;
+  border-radius:5px!important;
+  padding:8px!important;
+}
+body.printingAll #printAll .card .head{
+  color:#238A72!important;
+  font-size:8.5px!important;
+  border-bottom:1px solid #e2e9e6!important;
+  padding-bottom:4px!important;
+}
+body.printingAll #printAll .sum{
+  background:#EAF6F2!important;
+  border:1px solid #c9e7dc!important;
+  color:#1d4d40!important;
+}
+
+/* PDF: cabecera limpia, sin descripciones adicionales */
+body.printingAll #printAll .pdf-brand-block{gap:0!important}
+body.printingAll #printAll .pdf-brand-sub{display:none!important}
+
+/* ===== V36 — CABECERA INTEGRADA Y NATURAL ===== */
+body.printingAll #printAll .print-cover{
+  display:grid!important;
+  grid-template-columns:42mm 1fr!important;
+  align-items:center!important;
+  min-height:27mm!important;
+  padding:0 0 4mm!important;
+  margin:0 0 5mm!important;
+  border-bottom:2px solid #4DB699!important;
+}
+body.printingAll #printAll .pdf-brand-block{
+  display:flex!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  height:100%!important;
+  padding:0!important;
+}
+body.printingAll #printAll .gv-pdf-logo{
+  width:38mm!important;
+  max-width:38mm!important;
+  height:auto!important;
+  max-height:24mm!important;
+  object-fit:contain!important;
+  object-position:left center!important;
+  display:block!important;
+}
+body.printingAll #printAll .pdf-title-block{
+  align-self:center!important;
+  text-align:right!important;
+  padding:0!important;
+}
+body.printingAll #printAll .pdf-title{
+  font-size:17px!important;
+  letter-spacing:.4px!important;
+  line-height:1.08!important;
+}
+body.printingAll #printAll .pdf-type{
+  margin-top:1.5mm!important;
+  font-size:8px!important;
+}
+body.printingAll #printAll .pdf-date{
+  margin-top:1mm!important;
+  font-size:7px!important;
+}
+
+/* ===== V37 — CABECERA EXACTA DEL PDF GRUPO VARGO ===== */
+@page{size:A4 portrait;margin:0}
+body.printingAll #printAll{
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  background:#fff!important;
+  padding:0 12mm 14mm!important;
+  box-sizing:border-box!important;
+}
+body.printingAll #printAll .print-cover{
+  display:block!important;
+  padding:0!important;
+  margin:0 0 7mm!important;
+  border:0!important;
+  background:#fff!important;
+  min-height:0!important;
+}
+body.printingAll #printAll .pdf-navy-header{
+  width:calc(100% + 24mm)!important;
+  margin-left:-12mm!important;
+  height:31mm!important;
+  background:#050A1A!important;
+  display:flex!important;
+  align-items:center!important;
+  padding-left:12mm!important;
+  box-sizing:border-box!important;
+}
+body.printingAll #printAll .pdf-navy-header .gv-pdf-logo{
+  width:70mm!important;
+  height:auto!important;
+  max-height:25mm!important;
+  object-fit:contain!important;
+  object-position:left center!important;
+}
+body.printingAll #printAll .pdf-report-heading{
+  min-height:28mm!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-end!important;
+  justify-content:center!important;
+  border-bottom:2px solid #4DB699!important;
+  padding:5mm 0 4mm!important;
+  box-sizing:border-box!important;
+}
+body.printingAll #printAll .pdf-report-title{
+  font-size:19px!important;
+  line-height:1.1!important;
+  font-weight:800!important;
+  color:#050A1A!important;
+  letter-spacing:.5px!important;
+}
+body.printingAll #printAll .pdf-report-type{
+  margin-top:2mm!important;
+  font-size:9px!important;
+  font-weight:800!important;
+  color:#238A72!important;
+  text-transform:uppercase!important;
+}
+body.printingAll #printAll .pdf-report-date{
+  margin-top:1mm!important;
+  font-size:8px!important;
+  color:#596660!important;
+}
+body.printingAll #printAll .sec h2{
+  background:#050A1A!important;
+  color:#fff!important;
+  border-left:5px solid #4DB699!important;
+}
+
+/* ===== V38 — COLOR DE ENCABEZADO CORPORATIVO FORZADO EN PDF ===== */
+@media print{
+  body.printingAll #printAll .pdf-navy-header{
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important;
+    background-color:#050A1A!important;
+    background-image:none!important;
+  }
+  body.printingAll #printAll .pdf-navy-header::before{
+    content:""!important;
+    position:absolute!important;
+    inset:0!important;
+    background:#050A1A!important;
+    z-index:0!important;
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important;
+  }
+  body.printingAll #printAll .pdf-navy-header{
+    position:relative!important;
+    isolation:isolate!important;
+  }
+  body.printingAll #printAll .pdf-navy-header .gv-pdf-logo{
+    position:relative!important;
+    z-index:1!important;
+  }
+  body.printingAll #printAll .pdf-report-heading{
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important;
+  }
+  body.printingAll #printAll .sec h2{
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important;
+    background:#050A1A!important;
+  }
+}
+
+/* ===== V39 — CABECERA SEGÚN MARCADO DEL USUARIO ===== */
+@media print{
+  body.printingAll #printAll .print-cover{
+    display:block!important;
+    margin:0 0 6mm!important;
+    padding:0!important;
+    border:0!important;
+    background:#fff!important;
+  }
+  body.printingAll #printAll .pdf-navy-header{
+    width:calc(100% + 24mm)!important;
+    margin-left:-12mm!important;
+    height:30mm!important;
+    padding:0 12mm!important;
+    box-sizing:border-box!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    background:#050A1A!important;
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important;
+  }
+  body.printingAll #printAll .pdf-header-left{
+    display:flex!important;
+    align-items:center!important;
+    height:100%!important;
+    flex:0 0 55%!important;
+  }
+  body.printingAll #printAll .pdf-header-right{
+    flex:0 0 45%!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:flex-end!important;
+    justify-content:center!important;
+    text-align:right!important;
+  }
+  body.printingAll #printAll .pdf-navy-header .gv-pdf-logo{
+    width:48mm!important;
+    height:auto!important;
+    max-height:22mm!important;
+    object-fit:contain!important;
+    object-position:left center!important;
+  }
+  body.printingAll #printAll .pdf-report-title{
+    font-size:16px!important;
+    line-height:1.15!important;
+    font-weight:800!important;
+    letter-spacing:.3px!important;
+    color:#fff!important;
+  }
+  body.printingAll #printAll .pdf-report-type{
+    margin-top:2mm!important;
+    font-size:8px!important;
+    line-height:1!important;
+    font-weight:800!important;
+    color:#4DB699!important;
+    text-transform:uppercase!important;
+  }
+  body.printingAll #printAll .pdf-report-date{
+    margin-top:1mm!important;
+    font-size:7px!important;
+    color:#fff!important;
+  }
+  body.printingAll #printAll .pdf-header-accent{
+    height:1.2mm!important;
+    width:100%!important;
+    background:#4DB699!important;
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important;
+  }
+}
+
+/* ===== V40 — MISMO CONTENIDO, SOLO REUBICACIÓN DEL TÍTULO ===== */
+@media print{
+  body.printingAll #printAll .pdf-navy-header{
+    height:30mm!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    padding:0 12mm!important;
+    margin:0!important;
+    background:#050A1A!important;
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important;
+  }
+  body.printingAll #printAll .pdf-header-left{
+    flex:0 0 auto!important;
+    width:auto!important;
+  }
+  body.printingAll #printAll .pdf-navy-header .gv-pdf-logo{
+    width:48mm!important;
+    max-height:22mm!important;
+    height:auto!important;
+  }
+  body.printingAll #printAll .pdf-report-heading{
+    min-height:20mm!important;
+    padding:3mm 0 2mm!important;
+    margin:0!important;
+    display:flex!important;
+    align-items:flex-end!important;
+    justify-content:center!important;
+    flex-direction:column!important;
+    text-align:right!important;
+    border-bottom:0!important;
+  }
+  body.printingAll #printAll .pdf-report-title{
+    color:#050A1A!important;
+    font-size:16px!important;
+    font-weight:800!important;
+    line-height:1.1!important;
+  }
+  body.printingAll #printAll .pdf-report-type{
+    margin-top:1mm!important;
+    color:#238A72!important;
+    font-size:8px!important;
+    font-weight:800!important;
+  }
+  body.printingAll #printAll .pdf-report-date{
+    margin-top:.5mm!important;
+    color:#596660!important;
+    font-size:7px!important;
+  }
+  body.printingAll #printAll .pdf-header-accent{
+    height:1.2mm!important;
+    background:#4DB699!important;
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important;
+  }
+}
+
+/* ===== V41 — AJUSTE FINO DE POSICIÓN DE CABECERA ===== */
+@media print{
+  body.printingAll #printAll .print-cover{
+    margin:0 0 5mm!important;
+    padding:0!important;
+  }
+
+  /* Navy band: logo only */
+  body.printingAll #printAll .pdf-navy-header{
+    height:27mm!important;
+    width:calc(100% + 24mm)!important;
+    margin-left:-12mm!important;
+    padding:0 12mm!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    background:#050A1A!important;
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important;
+  }
+
+  body.printingAll #printAll .pdf-navy-header .gv-pdf-logo{
+    width:44mm!important;
+    max-height:20mm!important;
+    height:auto!important;
+  }
+
+  /* White strip: title is retained, moved right to the top */
+  body.printingAll #printAll .pdf-report-heading{
+    height:15mm!important;
+    min-height:15mm!important;
+    margin:0!important;
+    padding:1.5mm 0 1mm!important;
+    box-sizing:border-box!important;
+    display:flex!important;
+    flex-direction:column!important;
+    justify-content:flex-start!important;
+    align-items:flex-end!important;
+    text-align:right!important;
+    border:0!important;
+  }
+
+  body.printingAll #printAll .pdf-report-title{
+    margin:0!important;
+    padding:0!important;
+    font-size:15px!important;
+    line-height:1.05!important;
+    font-weight:800!important;
+    color:#050A1A!important;
+  }
+
+  body.printingAll #printAll .pdf-report-type{
+    margin:1mm 0 0!important;
+    padding:0!important;
+    font-size:7px!important;
+    line-height:1!important;
+    font-weight:800!important;
+    color:#238A72!important;
+  }
+
+  body.printingAll #printAll .pdf-report-date{
+    margin:.6mm 0 0!important;
+    padding:0!important;
+    font-size:6.5px!important;
+    line-height:1!important;
+    color:#596660!important;
+  }
+
+  body.printingAll #printAll .pdf-header-accent{
+    height:1mm!important;
+    margin:0!important;
+    background:#4DB699!important;
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important;
+  }
+}
+
+/* ===== V42 — SOLO CABECERA: TÍTULO DENTRO DE LA FRANJA OSCURA ===== */
+@media print{
+  body.printingAll #printAll .print-cover{
+    margin:0 0 6mm!important;
+    padding:0!important;
+    border:0!important;
+  }
+  body.printingAll #printAll .pdf-navy-header{
+    width:calc(100% + 24mm)!important;
+    margin-left:-12mm!important;
+    height:30mm!important;
+    padding:0 12mm!important;
+    box-sizing:border-box!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    background:#050A1A!important;
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important;
+  }
+  body.printingAll #printAll .pdf-header-left{
+    flex:0 0 auto!important;
+    display:flex!important;
+    align-items:center!important;
+  }
+  body.printingAll #printAll .pdf-header-right{
+    flex:1!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:flex-end!important;
+    justify-content:center!important;
+    text-align:right!important;
+  }
+  body.printingAll #printAll .pdf-navy-header .gv-pdf-logo{
+    width:48mm!important;
+    height:auto!important;
+    max-height:22mm!important;
+    object-fit:contain!important;
+  }
+  body.printingAll #printAll .pdf-report-title{
+    margin:0!important;
+    color:#FFFFFF!important;
+    font-size:16px!important;
+    line-height:1.1!important;
+    font-weight:800!important;
+    letter-spacing:.3px!important;
+  }
+  body.printingAll #printAll .pdf-report-type{
+    margin-top:1.8mm!important;
+    color:#4DB699!important;
+    font-size:8px!important;
+    line-height:1!important;
+    font-weight:800!important;
+    text-transform:uppercase!important;
+  }
+  body.printingAll #printAll .pdf-report-date{
+    margin-top:1mm!important;
+    color:#FFFFFF!important;
+    font-size:7px!important;
+    line-height:1!important;
+  }
+  body.printingAll #printAll .pdf-header-accent{
+    height:1.2mm!important;
+    width:100%!important;
+    background:#4DB699!important;
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important;
+  }
+}
+
+/* ===== V43 — CABECERA FINAL: SOLO UBICACIÓN DEL TÍTULO ===== */
+@media print{
+  body.printingAll #printAll .print-cover{
+    margin:0 0 6mm!important;
+    padding:0!important;
+    border:0!important;
+  }
+  body.printingAll #printAll .gv-pdf-header-final{
+    width:calc(100% + 24mm)!important;
+    margin-left:-12mm!important;
+    height:30mm!important;
+    padding:0 12mm!important;
+    box-sizing:border-box!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    background:#050A1A!important;
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important;
+  }
+  body.printingAll #printAll .gv-pdf-logo-final{
+    width:48mm!important;
+    max-height:22mm!important;
+    height:auto!important;
+    object-fit:contain!important;
+    flex:none!important;
+  }
+  body.printingAll #printAll .gv-pdf-header-text{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:flex-end!important;
+    justify-content:center!important;
+    text-align:right!important;
+    flex:1!important;
+  }
+  body.printingAll #printAll .gv-pdf-title-final{
+    color:#FFFFFF!important;
+    font-size:16px!important;
+    line-height:1.1!important;
+    font-weight:800!important;
+    letter-spacing:.3px!important;
+    margin:0!important;
+  }
+  body.printingAll #printAll .gv-pdf-type-final{
+    color:#4DB699!important;
+    font-size:8px!important;
+    font-weight:800!important;
+    line-height:1!important;
+    margin-top:1.8mm!important;
+  }
+  body.printingAll #printAll .gv-pdf-date-final{
+    color:#FFFFFF!important;
+    font-size:7px!important;
+    line-height:1!important;
+    margin-top:1mm!important;
+  }
+  body.printingAll #printAll .gv-pdf-line-final{
+    height:1.2mm!important;
+    width:100%!important;
+    background:#4DB699!important;
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important;
+  }
+}
+
+/* ===== V44 — REGISTRO FOTOGRÁFICO EN 4 SEPARACIONES ===== */
+.photo-folders{display:grid;gap:10px;margin:12px 0}
+.photo-folder{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1px solid #D7E2DE;border-radius:10px;background:#fff;cursor:pointer;transition:.15s}
+.photo-folder:hover{border-color:#4DB699;box-shadow:0 2px 8px rgba(5,10,26,.08)}
+.photo-folder-icon{font-size:22px;flex:none}
+.photo-folder-main{display:flex;flex-direction:column;gap:3px;flex:1}
+.photo-folder-main b{font-size:15px;color:#050A1A}
+.photo-folder-main span{font-size:12px;color:#65716D}
+.photo-folder-count{font-weight:700;color:#238A72;font-size:13px}
+.photo-folder-panel{margin-top:12px;padding:14px;border:1px solid #D7E2DE;border-radius:10px;background:#F8FBFA}
+.photo-folder-panel-title{font-weight:700;color:#596660;padding:10px}
+.photo-folder-panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.photo-folder-panel-head small{display:block;color:#65716D;margin-top:3px}
+.photo-add-btn{cursor:pointer}
+.photo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.photo-grid .photo{background:#fff}
+.photo-empty{padding:24px;text-align:center;color:#65716D;background:#fff;border:1px dashed #C8D6D1;border-radius:8px}
+.photo-pdf-folder{margin:0 0 12px}
+.photo-pdf-folder h3{margin:10px 0 8px;padding:7px 9px;background:#050A1A;color:#fff;border-left:3px solid #4DB699;font-size:10px}
+.photo-pdf-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media print{
+  .photo-pdf-folder{break-inside:auto}
+  .photo-pdf-grid{grid-template-columns:repeat(2,1fr)}
+  .photo-pdf-grid .photo{break-inside:avoid}
+}
+
+/* ===== V45 — DATOS ESPECÍFICOS PARA FOTOS DE REFERENCIAS ===== */
+.reference-fields{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}
+.reference-fields input,.reference-fields textarea{width:100%;box-sizing:border-box}
+.reference-fields textarea{grid-column:1 / -1;min-height:72px;resize:vertical;font-family:inherit}
+@media(max-width:700px){
+  .reference-fields{grid-template-columns:1fr}
+  .reference-fields textarea{grid-column:auto}
+}
+</style>
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#050A1A">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ficha Grupo Vargo">
+
+</head><body>
+<header class='bar'>
+  <span style='font-size:23px'>☰</span>
+  <img class='gv-app-logo' src='data:image/png;base64,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' alt='Grupo Vargo'>
+  <span class='gv-app-title'>Ficha de Inspección</span><span>☁</span><span style='font-size:25px'>⋮</span></header><nav class='tabs' id='tabs'></nav><main id='main'></main><div id='printAll'></div><div class='bottom'><button class='btn r' onclick='clearAll()'>🗑 NUEVA / LIMPIAR</button><button class='btn g' onclick='save()'>💾 GUARDAR</button><button class='btn' onclick='pdf()'>📄 GENERAR PDF</button></div>
+<script>
+const T=[['datos','▧ DATOS'],['terreno','▤ TERRENO'],['areas','▥ ÁREAS'],['cons','▧ CONSTR.'],['trag','▥ TRAGALUCES'],['amb','▤ AMBIENTES'],['obras','▧ OBRAS'],['serv','⚙ SERVICIOS'],['fotos','📷 FOTOS']];let page='datos';
+let d=JSON.parse(localStorage.getItem('vargoFicha')||'null')||{datos:{fecha:'',hora:'',lugar:'',coord:'',direccion:'',propietario:'',inspector:'',tipo:'',pisos:1,anio:''},terreno:{doc:'',campo:'',frente:'',fondo:'',der:'',izq:'',frentes:1,patio:'',jardin:'',otroLibre:'',patios:'',libre:'',forma:'',topo:'',acceso:''},floors:[],cons:[],trag:[],amb:[],obras:[],serv:{agua:'',aguaDetalle:'',desague:'',desagueDetalle:'',electricidad:'',electricidadDetalle:''},photos:[]};
+if(!d.serv)d.serv={agua:'',aguaDetalle:'',desague:'',desagueDetalle:'',electricidad:'',electricidadDetalle:''};
+function esc(x){return String(x??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;')}
+function num(v){if(v===null||v===undefined||v==='')return 0;let s=String(v).trim().replace(/\s/g,'').replace(',','.');let n=parseFloat(s);return Number.isFinite(n)?n:0}
+
+function set(path,value){
+  const p=String(path).split('.');
+  let obj=d;
+  for(let i=0;i<p.length-1;i++){
+    if(obj[p[i]]===undefined || obj[p[i]]===null) obj[p[i]]={};
+    obj=obj[p[i]];
+  }
+  obj[p[p.length-1]]=value;
+}
+
+function f(l,k,v,t='text',ex=''){
+  const isNum=t==='number';
+  const type=isNum?'text':t;
+  const mobile=isNum?'inputmode="decimal" autocomplete="off"':'';
+  return `<div class='f'><label>${l}</label><input type='${type}' ${mobile} data-k='${k}' value='${esc(v)}' ${ex}></div>`;
+}function s(l,k,v,opts){return `<div class='f'><label>${l}</label><select data-k='${k}'><option value=''>Seleccionar...</option>${opts.map(x=>`<option ${v===x?'selected':''}>${x}</option>`).join('')}</select></div>`}function sec(t,b){return `<section class='sec'><h2>${t}</h2><div class='body'>${b}</div></section>`}
+function tipoInspeccion(){
+  return String(d.datos?.tipo||'').trim().toLowerCase();
+}
+function tabsPermitidas(){
+  const tipo=tipoInspeccion();
+  if(tipo==='departamento') return ['datos','amb','fotos'];
+  if(tipo==='terreno') return ['datos','terreno','obras','fotos'];
+  return T.map(x=>x[0]);
+}
+function isDepartamento(){return tipoInspeccion()==='departamento'}
+function tabPermitida(p){return tabsPermitidas().includes(p)}
+function drawTabs(){
+  tabs.innerHTML=T.map(x=>{
+    const locked=!tabPermitida(x[0]);
+    return `<button class='tab ${page==x[0]?'on':''} ${locked?'locked':''}' ${locked?'disabled title="No aplica para departamento"':'onclick=\'go("'+x[0]+'")\''}>${x[1]}${locked?' 🔒':''}</button>`;
+  }).join('');
+}
+function go(p){
+  if(!tabPermitida(p)){
+    if(isDepartamento()) alert('Para un DEPARTAMENTO, la inspección se limita a DATOS GENERALES, AMBIENTES y FOTOS.');
+    return;
+  }
+  page=p;drawTabs();render();
+}
+function render(){let a=main;if(page==='datos')datos(a);if(page==='terreno')terreno(a);if(page==='areas'){levels();areas(a)}if(page==='cons')cons(a);if(page==='trag'){levels();trag(a)}if(page==='amb'){levels();amb(a)}if(page==='obras')obras(a);if(page==='serv')serv(a);if(page==='fotos')fotos(a);bind()}
+function datos(a){
+  const aviso=isDepartamento()?`<div class='dept-notice'><b>DEPARTAMENTO:</b> se habilitan únicamente <b>DATOS GENERALES, AMBIENTES y FOTOS</b>. Las demás secciones quedan bloqueadas porque no forman parte de esta verificación.</div>`:
+    tipoInspeccion()==='terreno'?`<div class='dept-notice'><b>TERRENO:</b> se habilitan únicamente <b>DATOS GENERALES, TERRENO, OBRAS y FOTOS</b>. En OBRAS podrás registrar, por ejemplo, cerco perimetral, portón, vereda u otra obra existente; si el terreno está vacío, puedes dejar OBRAS sin registros.</div>`:'';
+  a.innerHTML=aviso+sec('1. DATOS GENERALES',`<div class='grid'>${f('Fecha de inspección','datos.fecha',d.datos.fecha,'date')}${f('Hora','datos.hora',d.datos.hora,'time')}${f('Lugar','datos.lugar',d.datos.lugar)}${f('Coordenadas de ubicación','datos.coord',d.datos.coord)}${f('Dirección de la propiedad','datos.direccion',d.datos.direccion,'text','class="full"')}${f('Propietario','datos.propietario',d.datos.propietario)}${f('Inspector','datos.inspector',d.datos.inspector)}${s('Tipo de inmueble','datos.tipo',d.datos.tipo,['Terreno','Vivienda','Departamento','Local comercial','Oficina','Nave industrial','Galpón','Almacén','Taller','Otro'])}${f('Número de pisos','datos.pisos',d.datos.pisos,'number','min="0"')}${f('Año aprox. de construcción','datos.anio',d.datos.anio,'number','min="0"')}</div><p class='hint'>Datos mínimos definidos para la inspección. Las coordenadas pueden escribirse manualmente.</p>`)}
+function terreno(a){
+  a.innerHTML=sec('2. TERRENO',`<div class='grid'>
+  ${f('Área según documentación (m²)','terreno.doc',d.terreno.doc,'number','step="0.01"')}
+  ${f('Área verificada en campo (m²)','terreno.campo',d.terreno.campo,'number','step="0.01"')}
+  ${f('Frente (m)','terreno.frente',d.terreno.frente,'number','step="0.01"')}
+  ${f('Fondo (m)','terreno.fondo',d.terreno.fondo,'number','step="0.01"')}
+  ${f('Lado derecho (m)','terreno.der',d.terreno.der,'number','step="0.01"')}
+  ${f('Lado izquierdo (m)','terreno.izq',d.terreno.izq,'number','step="0.01"')}
+  ${f('N.º de frentes','terreno.frentes',d.terreno.frentes,'number','min="1"')}
+  ${s('Forma','terreno.forma',d.terreno.forma,['Regular','Irregular'])}
+  ${s('Topografía','terreno.topo',d.terreno.topo,['Plana','Inclinada','Accidentada'])}
+  ${s('Tipo de acceso','terreno.acceso',d.terreno.acceso,['Directo','Pasaje','Servidumbre','Otro'])}
+  </div><p class='hint'>Aquí se registran las características del lote. Las áreas ocupadas, libres y su distribución están en ÁREAS.</p>`);
+}
+function levels(){
+  const n=Math.max(0,parseInt(d.datos.pisos,10)||0);
+  if(!Array.isArray(d.floors)) d.floors=[];
+  while(d.floors.length<n){
+    d.floors.push({construida:'',tech:'',voladizo:'',libre:'',ocup:'',obs:''});
+  }
+  if(d.floors.length>n) d.floors=d.floors.slice(0,n);
+}function ordinal(n){let x=['1.er piso','2.º piso','3.er piso','4.º piso','5.º piso','6.º piso','7.º piso','8.º piso','9.º piso','10.º piso','11.º piso','12.º piso'];return x[n-1]||n+'.º piso'}
+function areas(a){
+  const rows=d.floors.map((x,i)=>{
+    const c=num(x.construida),t=num(x.tech),v=i===0?0:num(x.voladizo),o=Math.max(0,c-v); x.ocup=o.toFixed(2);
+    return `<tr class='area-row'><td>${ordinal(i+1)}</td>
+      <td><input type='text' inputmode='decimal' autocomplete='off' data-a='floors' data-i='${i}' data-f='construida' value='${esc(x.construida)}'></td>
+      <td><input type='text' inputmode='decimal' autocomplete='off' data-a='floors' data-i='${i}' data-f='tech' value='${esc(x.tech)}'></td>
+      <td><input type='text' inputmode='decimal' autocomplete='off' data-a='floors' data-i='${i}' data-f='voladizo' value='${esc(x.voladizo)}' ${i===0?'readonly class="readonly"':''}></td>
+      <td><input class='readonly' value='${o.toFixed(2)}' readonly></td>
+      <td><input type='text' data-a='floors' data-i='${i}' data-f='obs' value='${esc(x.obs||'')}'></td></tr>`;
+  }).join('');
+  const built=d.floors.reduce((s,x)=>s+num(x.construida),0),tech=d.floors.reduce((s,x)=>s+num(x.tech),0),vol=d.floors.reduce((s,x)=>s+num(x.voladizo),0),ocup=d.floors.reduce((s,x)=>s+Math.max(0,num(x.construida)-num(x.voladizo)),0);
+  const terreno=num(d.terreno.campo||d.terreno.doc), libre=Math.max(0,terreno-num(d.floors[0]?.ocup));
+  d.terreno.libre=libre.toFixed(2);
+  const patio=num(d.terreno.patio),jardin=num(d.terreno.jardin),otro=num(d.terreno.otroLibre),dist=patio+jardin+otro;
+  a.innerHTML=sec('3. ÁREAS DE LA EDIFICACIÓN POR NIVEL',`
+  <div class='tablewrap'><table class='tbl'><tr><th>NIVEL</th><th>ÁREA CONSTRUIDA (m²)</th><th>ÁREA TECHADA (m²)</th><th>VOLADIZO (m²)</th><th>ÁREA OCUPADA (m²)</th><th>OBS.</th></tr>${rows}
+  <tr><th>TOTAL</th><th id='totalBuilt'>${built.toFixed(2)}</th><th id='totalTech'>${tech.toFixed(2)}</th><th id='totalVol'>${vol.toFixed(2)}</th><th id='totalOcup'>${ocup.toFixed(2)}</th><th></th></tr></table></div>
+  <div class='subsection'><h3>ÁREA LIBRE DEL TERRENO</h3><div class='grid'>
+    <div class='f'><label>Área ocupada 1.er piso (m²)</label><input class='readonly' id='ocupadaTerreno' value='${num(d.floors[0]?.ocup).toFixed(2)}' readonly></div>
+    <div class='f'><label>Área libre (m²)</label><input class='readonly' id='areaLibreCalc' value='${libre.toFixed(2)}' readonly></div>
+    ${f('Patio (m²)','terreno.patio',d.terreno.patio||'','number','step="0.01"')}
+    ${f('Jardín (m²)','terreno.jardin',d.terreno.jardin||'','number','step="0.01"')}
+    ${f('Otro área libre (m²)','terreno.otroLibre',d.terreno.otroLibre||'','number','step="0.01"')}
+  </div>
+  <div class='sum'><b>Área libre disponible:</b> <span id='libreDisponible'>${libre.toFixed(2)}</span> m² &nbsp;|&nbsp; <b>Distribución registrada:</b> <span id='libreDistribuido'>${dist.toFixed(2)}</span> m²</div>
+  <div id='libreAlert' class='warn' style='display:${dist>libre+0.0001?'block':'none'}'>⚠️ La distribución (${dist.toFixed(2)} m²) supera el área libre disponible (${libre.toFixed(2)} m²).</div>
+  <p class='hint'>Área libre = terreno − área ocupada del primer piso. Patio, jardín y otro son componentes del área libre.</p></div>
+  <div class='sum'><b>Área construida total:</b> ${built.toFixed(2)} m² | <b>Área techada:</b> ${tech.toFixed(2)} m² | <b>Voladizos:</b> ${vol.toFixed(2)} m² | <b>Área ocupada:</b> ${ocup.toFixed(2)} m²</div>`);
+}
+function cons(a){let cards=d.cons.map((x,i)=>`<div class='card construction-card'><div class='head'>Construcción ${i+1}<button class='btn r' onclick='delCons(${i})'>Eliminar</button></div><div class='grid'>${s('Tipo','c.tipo',x.tipo,['Vivienda','Departamento','Local comercial','Oficina','Galpón','Nave industrial','Almacén','Taller','Cobertizo','Otro'])}${f('Uso','c.uso',x.uso)}${f('N.º de niveles','c.niv',x.niv,'number','min="1"')}${f('Área que ocupa (m²)','c.ocupa',x.ocupa,'number')}${f('Área construida total (m²)','c.tech',x.tech,'number')}${f('Año aprox.','c.anio',x.anio,'number')}${s('Material','c.mat',x.mat,['Ladrillo y cemento','Adobe','Concreto armado','Mixto','Otro'])}${s('Estado','c.est',x.est,['Muy bueno','Bueno','Regular','Malo','Muy malo'])}${f('Observaciones','c.obs',x.obs,'text','class="full"')}</div></div>`).join('');a.innerHTML=sec('4. CONSTRUCCIONES EXISTENTES',cards+`<button class='btn g' onclick='addCons()'>＋ AGREGAR CONSTRUCCIÓN</button><p class='hint'>Permite separar vivienda, galpón, nave industrial u otras construcciones dentro del mismo terreno.</p>`)}
+function addCons(){save(false);d.cons.push({tipo:'',uso:'',niv:1,ocupa:'',tech:'',anio:'',mat:'',est:'',obs:''});save(false);render()}function delCons(i){d.cons.splice(i,1);save(false);render()}
+function trag(a){
+  const n=Math.max(0,+d.datos.pisos||0);
+  d.trag=d.trag||[];
+  const cards=d.trag.map((x,i)=>{
+    const ancho=num(x.ancho), largo=num(x.largo);
+    const area=(ancho*largo).toFixed(2);
+    let ini=Math.max(1,Math.min(n||1,+x.inicio||1));
+    let fin=Math.max(ini,Math.min(n||1,+x.fin||ini));
+    const niveles=fin-ini+1;
+    return `<div class='card tragaluz-card'>
+      <div class='head'>Tragaluz ${i+1}<button class='btn r' onclick='delTrag(${i})'>Eliminar</button></div>
+      <div class='grid'>
+        ${f('Ancho (m)','t.ancho',x.ancho,'number','step="0.01" min="0" placeholder="Ej. 1.20"')}
+        ${f('Largo (m)','t.largo',x.largo,'number','step="0.01" min="0" placeholder="Ej. 2.00"')}
+        ${f('Piso inicial','t.inicio',x.inicio||1,'number',`min="1" max="${n||1}"`)}
+        ${f('Piso final','t.fin',x.fin||x.inicio||1,'number',`min="1" max="${n||1}"`)}
+        <div class='f'><label>Área del tragaluz (m²)</label><input class='readonly' value='${area}' disabled></div>
+        <div class='f'><label>N.º de niveles que atraviesa</label><input class='readonly' value='${niveles}' disabled></div>
+        ${f('Descripción / ubicación','t.obs',x.obs,'text','class="full" placeholder="Ej. tragaluz central entre escalera y patio"')}
+      </div>
+      <div class='sum'><b>Resultado:</b> ${ancho.toFixed(2)} × ${largo.toFixed(2)} = <b>${area} m²</b> &nbsp; | &nbsp; Desde <b>${ordinal(ini)}</b> hasta <b>${ordinal(fin)}</b> &nbsp; | &nbsp; ${niveles} nivel(es)</div>
+    </div>`;
+  }).join('');
+  const total=d.trag.reduce((sum,x)=>(sum+(num(x.ancho)*num(x.largo))),0);
+  a.innerHTML=sec('4. TRAGALUCES',`<p class='hint'>Ingresa ancho y largo con decimales. Puedes usar 1.20 o 1,20. El área se calcula automáticamente. Indica desde qué piso inicia y en qué piso termina. El área del tragaluz se expresa en planta; no se multiplica por el número de niveles.</p>${cards||'<p class="hint">Aún no hay tragaluces registrados.</p>'}<button class='btn g' onclick='addTrag()'>＋ AGREGAR TRAGALUZ</button><div class='sum' id='tragTotal'><b>Área total de tragaluces:</b> ${total.toFixed(2)} m² &nbsp; | &nbsp; <b>Cantidad:</b> ${d.trag.length}</div>`);
+}
+function addTrag(){d.trag=d.trag||[];const ini=d.trag.length?d.trag[d.trag.length-1].fin||1:1;d.trag.push({ancho:'',largo:'',inicio:ini,fin:ini,obs:''});save(false);render()}
+function delTrag(i){d.trag.splice(i,1);save(false);render()}
+function amb(a){levels();let names=[['sala','Sala'],['com','Comedor'],['coc','Cocina'],['dorm','Dormitorios'],['ban','Baños'],['med','Medios baños'],['lav','Lavandería'],['est','Estudio'],['dep','Depósito'],['coch','Cochera'],['pat','Patio'],['otros','Otros']];d.amb=Array.from({length:d.floors.length},(_,i)=>d.amb[i]||Object.fromEntries(names.map(x=>[x[0],0])));a.innerHTML=sec('5. DISTRIBUCIÓN DE AMBIENTES',`<p class='hint'>No se solicitan medidas interiores. Solo cantidad por piso.</p>`+d.amb.map((x,i)=>`<div class='card'><div class='head'>${ordinal(i+1)}</div><div class='grid'>${names.map(n=>f(n[1],`amb.${i}.${n[0]}`,x[n[0]],'number','min="0"')).join('')}</div></div>`).join(''))}
+function obras(a){
+  d.obras=d.obras||[];
+  const cards=d.obras.map((x,i)=>{
+    const tipo=x.tipo||'';
+    const capacidadVisible=tipo==='Cisterna'||tipo==='Tanque elevado';
+    const cercoVisible=tipo==='Cerco'||tipo==='Muro';
+    const volumen=num(x.volumen);
+    const litros=volumen*1000;
+    const longitud=num(x.longitud || x.med);
+    const altura=num(x.altura);
+    const areaCerramiento=longitud*altura;
+
+    return `<div class='card obra-card'>
+      <div class='head'>Obra ${i+1}<button class='btn r' onclick='delObra(${i})'>Eliminar</button></div>
+      <div class='grid'>
+        ${s('Tipo','o.tipo',tipo,['Cerco','Portón','Vereda','Cisterna','Tanque elevado','Patio pavimentado','Escalera exterior','Cobertizo','Galpón','Muro','Pozo séptico','Pozo de agua','Biodigestor','Otro'])}
+        ${f('Cantidad','o.cant',x.cant,'number','step="0.01" min="0"')}
+        ${f('Unidad','o.uni',x.uni || (cercoVisible?'ml':''))}
+        ${cercoVisible ? `${f('Longitud (ml)','o.longitud',x.longitud || x.med,'number','step="0.01" min="0"')} ${f('Altura (m)','o.altura',x.altura,'number','step="0.01" min="0"')}<div class='f'><label>Área del cerramiento (m²)</label><input class='readonly obra-area-cerramiento' value='${areaCerramiento.toFixed(2)} m²' readonly></div>` : f('Área/longitud','o.med',x.med,'number','step="0.01"')}
+        ${capacidadVisible ? `${f('Capacidad / volumen (m³)','o.volumen',x.volumen||'','number','step="0.01" min="0" placeholder="Ej. 10.00"')}<div class='f'><label>Capacidad (litros)</label><input class='readonly obra-litros' value='${litros.toFixed(0)} L' readonly></div>` : ''}
+        ${f('Material','o.mat',x.mat)}
+        ${s('Estado','o.est',x.est,['Muy bueno','Bueno','Regular','Malo','Muy malo'])}
+        ${f('Observaciones','o.obs',x.obs,'text','class="full"')}
+      </div>
+      ${cercoVisible ? `<div class='sum obra-wall-area'><b>Área del cerramiento:</b> ${longitud.toFixed(2)} ml × ${altura.toFixed(2)} m = <b>${areaCerramiento.toFixed(2)} m²</b></div>` : ''}
+      ${capacidadVisible ? `<div class='sum obra-capacity'><b>Capacidad:</b> ${volumen.toFixed(2)} m³ = <b>${litros.toFixed(0)} litros</b></div>` : ''}
+    </div>`;
+  }).join('');
+
+  const cis=d.obras.filter(x=>x.tipo==='Cisterna').reduce((sum,x)=>sum+num(x.volumen),0);
+  const tan=d.obras.filter(x=>x.tipo==='Tanque elevado').reduce((sum,x)=>sum+num(x.volumen),0);
+  const totalCap=cis+tan;
+
+  const summary=(cis>0||tan>0)?`
+    <div class='sum' id='obraCapacityTotals'>
+      <b>CAPACIDAD TOTAL REGISTRADA</b><br>
+      Cisternas: <b>${cis.toFixed(2)} m³ = ${(cis*1000).toFixed(0)} litros</b>
+      &nbsp; | &nbsp;
+      Tanques elevados: <b>${tan.toFixed(2)} m³ = ${(tan*1000).toFixed(0)} litros</b>
+      &nbsp; | &nbsp;
+      Total: <b>${totalCap.toFixed(2)} m³ = ${(totalCap*1000).toFixed(0)} litros</b>
+    </div>`:'';
+
+  const obrasTitle=tipoInspeccion()==='terreno'?'3. OBRAS COMPLEMENTARIAS':'6. OBRAS COMPLEMENTARIAS';
+  a.innerHTML=sec(obrasTitle,cards+summary+
+    `<button class='btn g' onclick='addObra()'>＋ AGREGAR OBRA</button>
+     <p class='hint'>Para cerco o muro registra longitud y altura; el área del cerramiento se calcula automáticamente. Para cisterna y tanque elevado registra el volumen en m³.</p>`);
+}
+
+function addObra(){save(false);d.obras.push({tipo:'',cant:'',uni:'',med:'',volumen:'',mat:'',est:'',obs:''});save(false);render()}
+function delObra(i){d.obras.splice(i,1);save(false);render()}
+
+function serv(a){
+  const q=d.serv||{};
+  a.innerHTML=sec('7. SERVICIOS BÁSICOS Y ABASTECIMIENTO',`
+    <div class='grid'>
+      ${s('Abastecimiento de agua','serv.agua',q.agua,['','Red pública municipal (agua potable)','Pozo de agua','Agua subterránea','Cisterna abastecida por terceros','Camión cisterna','Otro','No cuenta'])}
+      ${f('Detalle / observación del agua','serv.aguaDetalle',q.aguaDetalle)}
+      ${s('Sistema de desagüe','serv.desague',q.desague,['','Red pública municipal','Pozo séptico','Biodigestor','Pozo ciego / letrina','Otro','No cuenta'])}
+      ${f('Detalle / observación del desagüe','serv.desagueDetalle',q.desagueDetalle)}
+      ${s('Suministro eléctrico','serv.electricidad',q.electricidad,['','Red pública','Generador','Paneles solares','Otro','No cuenta'])}
+      ${f('Detalle / observación de electricidad','serv.electricidadDetalle',q.electricidadDetalle)}
+    </div>
+    <p class='hint'>Registrar la fuente real verificada durante la inspección. Si existe red pública pero el inmueble se abastece por otra fuente, indicar ambas situaciones en la observación.</p>
+  `);
+}
+function fotos(a){
+  const folders=[
+    {id:'fachada',label:'0. FACHADA',icon:'📁',desc:'Vistas exteriores y frente del inmueble'},
+    {id:'medidor',label:'1. MEDIDOR',icon:'📁',desc:'Medidor eléctrico, agua u otros medidores'},
+    {id:'interior',label:'2. INTERIOR',icon:'📁',desc:'Ambientes, distribución y elementos interiores'},
+    {id:'referencias',label:'REFERENCIAS',icon:'📁',desc:'Ubicación, numeración, documentos y evidencias'}
+  ];
+  if(!Array.isArray(d.photos)) d.photos=[];
+  d.photos=d.photos.map(p=>({...p,folder:p.folder||'fachada'}));
+  a.innerHTML=sec('8. FOTOGRAFÍAS',`
+    <p class='hint'>Registro fotográfico obligatorio para todo tipo de inmueble. Selecciona una carpeta y agrega fotografías desde la cámara o galería.</p>
+    <div class='photo-folders'>
+      ${folders.map(folder=>{
+        const count=d.photos.filter(p=>p.folder===folder.id).length;
+        return `<div class='photo-folder' onclick='openPhotoFolder("${folder.id}")'>
+          <div class='photo-folder-icon'>${folder.icon}</div>
+          <div class='photo-folder-main'><b>${folder.label}</b><span>${folder.desc}</span></div>
+          <div class='photo-folder-count'>${count} foto${count===1?'':'s'} ›</div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div id='photoFolderPanel' class='photo-folder-panel'>
+      <div class='photo-folder-panel-title'>Selecciona una carpeta para comenzar</div>
+    </div>
+  `);
+  window._photoFolders=folders;
+}
+function openPhotoFolder(folderId){
+  const folder=(window._photoFolders||[]).find(x=>x.id===folderId);
+  if(!folder)return;
+  const panel=document.getElementById('photoFolderPanel');
+  if(!panel)return;
+  const items=d.photos.map((p,i)=>({...p,i})).filter(p=>p.folder===folderId);
+  panel.innerHTML=`
+    <div class='photo-folder-panel-head'>
+      <div><b>${folder.label}</b><small>${folder.desc}</small></div>
+      <label class='btn photo-add-btn'>📷 AGREGAR FOTO
+        <input class='noprint' type='file' accept='image/*' capture='environment' onchange='addPhotoToFolder(this,"${folderId}")' hidden>
+      </label>
+    </div>
+    ${items.length?`<div class='photo-grid'>${items.map(p=>`
+      <div class='photo'>
+        <div class='head'><b>Foto ${p.i+1}</b><button class='btn r' onclick='delPhoto(${p.i});openPhotoFolder("${folderId}")'>Eliminar</button></div>
+        <img src='${p.src}' alt='Foto ${p.i+1}'>
+        ${folderId==="referencias" ? `
+        <div class='reference-fields'>
+          <input placeholder='Área (m²)' value='${esc(p.area||"")}' oninput='d.photos[${p.i}].area=this.value;save(false)'>
+          <input placeholder='Coordenadas' value='${esc(p.coord||"")}' oninput='d.photos[${p.i}].coord=this.value;save(false)'>
+          <input placeholder='Celular / teléfono' value='${esc(p.cel||"")}' oninput='d.photos[${p.i}].cel=this.value;save(false)'>
+          <input placeholder='Precio' value='${esc(p.precio||"")}' oninput='d.photos[${p.i}].precio=this.value;save(false)'>
+          <textarea placeholder='Descripción del entorno' oninput='d.photos[${p.i}].entorno=this.value;save(false)'>${esc(p.entorno||"")}</textarea>
+        </div>` : `
+        <input placeholder='Descripción' value='${esc(p.desc||"")}' oninput='d.photos[${p.i}].desc=this.value;save(false)'>
+        <input style='margin-top:6px' placeholder='Ubicación / referencia' value='${esc(p.ubi||"")}' oninput='d.photos[${p.i}].ubi=this.value;save(false)'>`}
+      </div>`).join('')}</div>`:`<div class='photo-empty'>No hay fotografías en esta carpeta.</div>`}
+  `;
+}
+function addPhotoToFolder(input,folderId){
+  const q=input?.files?.[0];
+  if(!q)return;
+  const r=new FileReader();
+  r.onload=()=>{
+    d.photos.push({src:r.result,desc:'',ubi:'',folder:folderId,area:'',coord:'',cel:'',precio:'',entorno:''});
+    save(false);
+    render();
+    openPhotoFolder(folderId);
+  };
+  r.readAsDataURL(q);
+}
+function delPhoto(i){
+d.photos.splice(i,1);render()}
+
+function updateTragTotalsOnly(inputEl){
+  const card=inputEl.closest(".card");
+  if(!card)return;
+  const cards=[...document.querySelectorAll(".tragaluz-card")];
+  const idx=cards.indexOf(card);
+  if(idx<0 || !d.trag[idx])return;
+
+  const x=d.trag[idx];
+  const ancho=num(x.ancho);
+  const largo=num(x.largo);
+  const area=ancho*largo;
+
+  const maxP=Math.max(1,+d.datos.pisos||1);
+  const ini=Math.max(1,Math.min(maxP,+x.inicio||1));
+  const fin=Math.max(ini,Math.min(maxP,+x.fin||ini));
+  const niveles=fin-ini+1;
+
+  const sum=card.querySelector(".sum");
+  if(sum){
+    sum.innerHTML=`<b>Resultado:</b> ${ancho.toFixed(2)} × ${largo.toFixed(2)} = <b>${area.toFixed(2)} m²</b> &nbsp; | &nbsp; Desde <b>${ordinal(ini)}</b> hasta <b>${ordinal(fin)}</b> &nbsp; | &nbsp; ${niveles} nivel(es)`;
+  }
+
+  const readonly=card.querySelectorAll("input.readonly");
+  if(readonly[0]) readonly[0].value=area.toFixed(2);
+  if(readonly[1]) readonly[1].value=niveles;
+
+  const total=d.trag.reduce((s,t)=>s+num(t.ancho)*num(t.largo),0);
+  const totalEl=document.getElementById("tragTotal");
+  if(totalEl){
+    totalEl.innerHTML=`<b>Área total de tragaluces:</b> ${total.toFixed(2)} m² &nbsp; | &nbsp; <b>Cantidad:</b> ${d.trag.length}`;
+  }
+}
+function updateObraCapacityOnly(inputEl){
+  const card=inputEl.closest(".obra-card");
+  if(!card)return;
+  const cards=[...document.querySelectorAll(".obra-card")];
+  const idx=cards.indexOf(card);
+  if(idx<0 || !d.obras[idx])return;
+
+  const obra=d.obras[idx];
+  const tipo=obra.tipo||'';
+  const volumen=num(obra.volumen);
+  const litros=volumen*1000;
+
+  const litrosInput=card.querySelector(".obra-litros");
+  if(litrosInput) litrosInput.value=`${litros.toFixed(0)} L`;
+
+  const result=card.querySelector(".obra-capacity");
+  if(result) result.innerHTML=`<b>Capacidad:</b> ${volumen.toFixed(2)} m³ = <b>${litros.toFixed(0)} litros</b>`;
+
+  if(tipo==='Cerco'||tipo==='Muro'){
+    const longitud=num(obra.longitud||obra.med);
+    const altura=num(obra.altura);
+    const area=longitud*altura;
+    const areaInput=card.querySelector(".obra-area-cerramiento");
+    if(areaInput) areaInput.value=`${area.toFixed(2)} m²`;
+    const wallResult=card.querySelector(".obra-wall-area");
+    if(wallResult) wallResult.innerHTML=`<b>Área del cerramiento:</b> ${longitud.toFixed(2)} ml × ${altura.toFixed(2)} m = <b>${area.toFixed(2)} m²</b>`;
+  }
+
+  const cis=d.obras.filter(x=>x.tipo==='Cisterna').reduce((sum,x)=>sum+num(x.volumen),0);
+  const tan=d.obras.filter(x=>x.tipo==='Tanque elevado').reduce((sum,x)=>sum+num(x.volumen),0);
+  const totalCap=cis+tan;
+  const totalEl=document.getElementById("obraCapacityTotals");
+  if(totalEl){
+    if(cis===0 && tan===0) totalEl.remove();
+    else totalEl.innerHTML=`<b>CAPACIDAD TOTAL REGISTRADA</b><br>
+      Cisternas: <b>${cis.toFixed(2)} m³ = ${(cis*1000).toFixed(0)} litros</b>
+      &nbsp; | &nbsp;
+      Tanques elevados: <b>${tan.toFixed(2)} m³ = ${(tan*1000).toFixed(0)} litros</b>
+      &nbsp; | &nbsp;
+      Total: <b>${totalCap.toFixed(2)} m³ = ${(totalCap*1000).toFixed(0)} litros</b>`;
+  }
+}
+function bind(){
+  document.querySelectorAll("[data-k]").forEach(e=>{
+    const handler=()=>{
+      const key=e.dataset.k;
+      const v=e.value;
+      if(key.startsWith("t.")){
+        const card=e.closest(".tragaluz-card");
+        const cards=[...document.querySelectorAll(".tragaluz-card")];
+        const idx=card ? cards.indexOf(card) : -1;
+        if(idx>=0 && d.trag[idx]){ d.trag[idx][key.slice(2)]=v; updateTragTotalsOnly(e); }
+      }else if(key.startsWith("c.")){
+        const card=e.closest(".construction-card");
+        const cards=[...document.querySelectorAll(".construction-card")];
+        const idx=card ? cards.indexOf(card) : -1;
+        if(idx>=0 && d.cons[idx]) d.cons[idx][key.slice(2)]=v;
+      }else if(key.startsWith("o.")){
+        const card=e.closest(".obra-card");
+        const cards=[...document.querySelectorAll(".obra-card")];
+        const idx=card ? cards.indexOf(card) : -1;
+        if(idx>=0 && d.obras[idx]){
+          d.obras[idx][key.slice(2)]=v;
+          if(key==="o.volumen" || key==="o.longitud" || key==="o.altura" || key==="o.med") updateObraCapacityOnly(e);
+        }
+      }else if(key.startsWith("serv.")){
+        if(!d.serv) d.serv={};
+        d.serv[key.slice(5)]=v;
+      }else{
+        set(key,v);
+        if(key.startsWith("terreno.")) updateTerrainCalculatedFields();
+      }
+      save(false);
+    };
+    e.addEventListener("input",handler);
+    e.addEventListener("change",handler);
+    if(e.dataset.k==="datos.tipo"){
+      e.addEventListener("change",()=>{
+        const tipo=tipoInspeccion();
+        if(tipo==='departamento'){
+          d.terreno={doc:'',campo:'',frente:'',fondo:'',der:'',izq:'',frentes:1,patio:'',jardin:'',otroLibre:'',patios:'',libre:'',forma:'',topo:'',acceso:''};
+          d.floors=[]; d.cons=[]; d.trag=[]; d.obras=[];
+        }else if(tipo==='terreno'){
+          d.floors=[]; d.cons=[]; d.trag=[]; d.amb=[]; d.obras=[]; d.serv={agua:'',aguaDetalle:'',desague:'',desagueDetalle:'',electricidad:'',electricidadDetalle:''};
+        }
+        save(false);
+        if(!tabPermitida(page)) page='datos';
+        drawTabs();
+        render();
+      });
+    }
+    if(e.dataset.k==="datos.pisos"){
+      e.addEventListener("change",()=>{levels();if(page==="areas"||page==="trag"||page==="amb")render();});
+    }
+    if(e.dataset.k==="o.tipo"){
+      e.addEventListener("change",()=>{save(false);render();});
+    }
+  });
+  document.querySelectorAll("[data-a]").forEach(e=>e.addEventListener("input",()=>{
+    const v=e.value;
+    d[e.dataset.a][+e.dataset.i][e.dataset.f]=v;
+    if(page==="areas"){updateAreaTotalsOnly();updateTerrainCalculatedFields();}
+    save(false);
+  }));
+}
+function updateTerrainCalculatedFields(){
+  const terreno=num(d.terreno.campo||d.terreno.doc);
+  const ocupada=num(d.floors[0]?.ocup);
+  const libre=Math.max(0,terreno-ocupada);
+  d.terreno.libre=libre.toFixed(2);
+  const occ=document.getElementById("ocupadaTerreno");
+  const al=document.getElementById("areaLibreCalc");
+  const ld=document.getElementById("libreDisponible");
+  const lr=document.getElementById("libreDistribuido");
+  const alert=document.getElementById("libreAlert");
+  if(occ)occ.value=ocupada.toFixed(2);
+  if(al)al.value=libre.toFixed(2);
+  if(ld)ld.textContent=libre.toFixed(2);
+  const dist=num(d.terreno.patio)+num(d.terreno.jardin)+num(d.terreno.otroLibre);
+  if(lr)lr.textContent=dist.toFixed(2);
+  if(alert){
+    alert.style.display=dist>libre+0.0001?'block':'none';
+    alert.textContent=dist>libre+0.0001?`⚠️ La distribución del área libre (${dist.toFixed(2)} m²) supera el área libre disponible (${libre.toFixed(2)} m²).`:'';
+  }
+}
+function updateAreaTotalsOnly(){
+  let cc=0,tt=0,vv=0,oo=0;
+  d.floors.forEach((x,i)=>{
+    const c=num(x.construida), t=num(x.tech), v=i===0?0:num(x.voladizo), o=Math.max(0,c-v);
+    x.ocup=o.toFixed(2); cc+=c;tt+=t;vv+=v;oo+=o;
+  });
+  if(document.getElementById("totalBuilt")) document.getElementById("totalBuilt").textContent=cc.toFixed(2);
+  if(document.getElementById("totalTech")) document.getElementById("totalTech").textContent=tt.toFixed(2);
+  if(document.getElementById("totalVol")) document.getElementById("totalVol").textContent=vv.toFixed(2);
+  if(document.getElementById("totalOcup")) document.getElementById("totalOcup").textContent=oo.toFixed(2);
+  const inp=document.querySelector('[data-a="floors"][data-i="0"][data-f="ocup"]');
+  if(inp)inp.value=d.floors[0]?.ocup||'0.00';
+  updateTerrainCalculatedFields();
+}
+function save(show=true){localStorage.setItem('vargoFicha',JSON.stringify(d));if(show)alert('Ficha guardada correctamente en este dispositivo.')}function clearAll(){if(confirm('¿Borrar toda la ficha?')){localStorage.removeItem('vargoFicha');location.reload()}}function makePrintClean(source){
+  const clone=source.cloneNode(true);
+
+  clone.querySelectorAll("button,.btn,.hint,.noprint,.delete,.r").forEach(x=>x.remove());
+
+  clone.querySelectorAll("input,select,textarea").forEach(el=>{
+    let value="";
+    if(el.tagName==="SELECT"){
+      const opt=el.options[el.selectedIndex];
+      value=opt ? opt.textContent.trim() : "";
+    }else{
+      value=el.value || el.getAttribute("value") || "";
+    }
+    const span=document.createElement("span");
+    span.textContent=value;
+    span.className="print-value";
+    el.replaceWith(span);
+  });
+
+  clone.querySelectorAll("[contenteditable='true']").forEach(el=>{
+    const span=document.createElement("span");
+    span.textContent=el.textContent.trim();
+    el.replaceWith(span);
+  });
+
+  return clone;
+}
+
+function pdf(){
+  save(false);
+  const originalPage=page;
+  const print=document.getElementById("printAll");
+  print.innerHTML="";
+
+  const tipo=tipoInspeccion();
+  const cover=document.createElement("div");
+  cover.className="print-cover";
+  const fecha=d.datos.fecha||new Date().toLocaleDateString("es-PE");
+  const direccion=d.datos.direccion||"";
+  cover.innerHTML=`
+    <div class='gv-pdf-header-final'>
+      <img class='gv-pdf-logo-final' src='data:image/png;base64,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' alt='Grupo Vargo'>
+      <div class='gv-pdf-header-text'>
+        <div class='gv-pdf-title-final'>INFORME DE INSPECCIÓN</div>
+        <div class='gv-pdf-type-final'>${esc(d.datos.tipo||'INMUEBLE')}</div>
+        <div class='gv-pdf-date-final'>${esc(fecha)}</div>
+      </div>
+    </div>
+    <div class='gv-pdf-line-final'></div>
+  `;
+  print.appendChild(cover);
+
+  levels();
+
+  let sections;
+  if(tipo==='departamento'){
+    sections=[
+      ["datos",datos],
+      ["amb",amb]
+    ];
+  }else if(tipo==='terreno'){
+    sections=[
+      ["datos",datos],
+      ["terreno",terreno],
+      ["obras",obras]
+    ];
+  }else{
+    sections=[
+      ["datos",datos],
+      ["terreno",terreno],
+      ["areas",areas],
+      ["cons",cons],
+      ["trag",trag],
+      ["amb",amb],
+      ["obras",obras],
+      ["serv",serv]
+    ];
+  }
+
+  sections.forEach(([key,fn])=>{
+    const holder=document.createElement("div");
+    fn(holder);
+    const clean=makePrintClean(holder);
+    clean.querySelectorAll('.dept-notice').forEach(x=>x.remove());
+    print.appendChild(clean);
+  });
+
+  const photoSection=document.createElement("section");
+  photoSection.className="sec";
+  const photoFolders=[
+    {id:"fachada",label:"0. FACHADA"},
+    {id:"medidor",label:"1. MEDIDOR"},
+    {id:"interior",label:"2. INTERIOR"},
+    {id:"referencias",label:"REFERENCIAS"}
+  ];
+  let photoHtml=`<h2>8. FOTOGRAFÍAS</h2><div class="body">`;
+  if(!d.photos || !d.photos.length){
+    photoHtml+=`<p>No se registraron fotografías.</p>`;
+  }else{
+    photoFolders.forEach(folder=>{
+      const items=d.photos.map((p,i)=>({...p,i})).filter(p=>(p.folder||"fachada")===folder.id);
+      if(!items.length)return;
+      photoHtml+=`<div class="photo-pdf-folder"><h3>${folder.label}</h3><div class="photo-pdf-grid">`;
+      items.forEach(p=>{
+        photoHtml+=`<div class="photo">
+          <div><b>Foto ${p.i+1}</b></div>
+          ${(p.folder||"fachada")==="referencias" ? `
+          ${p.area?`<div><b>Área:</b> ${esc(p.area)} m²</div>`:""}
+          ${p.coord?`<div><b>Coordenadas:</b> ${esc(p.coord)}</div>`:""}
+          ${p.cel?`<div><b>Celular / teléfono:</b> ${esc(p.cel)}</div>`:""}
+          ${p.precio?`<div><b>Precio:</b> ${esc(p.precio)}</div>`:""}
+          ${p.entorno?`<div><b>Descripción del entorno:</b> ${esc(p.entorno)}</div>`:""}
+          ` : `
+          ${p.desc?`<div><b>Descripción:</b> ${esc(p.desc)}</div>`:""}
+          ${p.ubi?`<div><b>Ubicación:</b> ${esc(p.ubi)}</div>`:""}`}
+          <img src="${p.src}" alt="Foto ${p.i+1}">
+        </div>`;
+      });
+      photoHtml+=`</div></div>`;
+    });
+  }
+  photoHtml+=`</div>`;
+  photoSection.innerHTML=photoHtml;
+  print.appendChild(photoSection);
+
+  const footer=document.createElement("div");
+  footer.className="print-footer";
+  footer.textContent="Grupo Vargo · Ficha de inspección · Documento generado a partir de la información registrada en la inspección.";
+  print.appendChild(footer);
+
+  document.body.classList.add("printingAll");
+  const cleanup=()=>{
+    document.body.classList.remove("printingAll");
+    print.innerHTML="";
+    page=originalPage;
+    drawTabs();
+    render();
+    window.removeEventListener("afterprint",cleanup);
+  };
+  window.addEventListener("afterprint",cleanup);
+  setTimeout(()=>window.print(),150);
+}
+
+drawTabs();render();updateTerrainCalculatedFields();
+
+function normalizeDecimalValue(v){
+  if (typeof v !== "string") return v;
+  return v.replace(",", ".");
+}
+
+</script>
+<script>
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  });
+}
+</script>
+
+</body></html>
