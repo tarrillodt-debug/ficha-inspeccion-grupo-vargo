@@ -1233,9 +1233,17 @@ function openPhotoFolder(folderId){
   panel.innerHTML=`
     <div class='photo-folder-panel-head'>
       <div><b>${folder.label}</b><small>${folder.desc}</small></div>
-      <label class='btn photo-add-btn'>📷 AGREGAR FOTO
-        <input class='noprint' type='file' accept='image/*' onchange='addPhotoToFolder(this,"${folderId}")' hidden>
-      </label>
+      <div class="photo-actions">
+  <label class="btn photo-add-btn">
+    📷 TOMAR FOTO
+    <input class="noprint" type="file" accept="image/*" capture="environment" onchange='addPhotoToFolder(this, "${folderId}")' hidden>
+  </label>
+
+  <label class="btn photo-add-btn">
+    🖼️ GALERÍA
+    <input class="noprint" type="file" accept="image/*" onchange='addPhotoToFolder(this, "${folderId}")' hidden>
+  </label>
+</div>
     </div>
     ${items.length?`<div class='photo-grid'>${items.map(p=>`
       <div class='photo'>
