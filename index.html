@@ -992,6 +992,43 @@ body.printingAll #printAll .sec h2{
   .reference-fields{grid-template-columns:1fr}
   .reference-fields textarea{grid-column:auto}
 }
+
+.roof-head,.roof-row{display:grid;grid-template-columns:1fr 160px 48px;gap:8px;align-items:center}.roof-head{font-size:11px;font-weight:700;color:#66736b;margin-bottom:5px}.roof-row{margin-bottom:8px}.photo-actions{display:flex;gap:8px;flex-wrap:wrap}.photo-actions .btn{white-space:nowrap}
+
+.amb-row{display:grid;grid-template-columns:1.1fr 90px 1.2fr 1.2fr 44px;gap:8px;align-items:end;border-bottom:1px solid #e2e8e4;padding:9px 0}.amb-row:last-child{border-bottom:0}.amb-del{height:42px}.amb-list{margin-bottom:10px}
+@media(max-width:700px){.amb-row{grid-template-columns:1fr 100px}.amb-row .f:nth-child(3){grid-column:1/-1}.amb-del{grid-column:2;height:42px}}
+
+@media print{
+  body.printingAll #printAll .amb-row{
+    display:grid!important;
+    grid-template-columns:1.25fr 55px 1.15fr 1.15fr 28px!important;
+    gap:5px!important;
+    align-items:end!important;
+    width:100%!important;
+    min-width:0!important;
+    overflow:hidden!important;
+  }
+  body.printingAll #printAll .amb-row .f{
+    min-width:0!important;
+    padding:3px 4px!important;
+    overflow:hidden!important;
+  }
+  body.printingAll #printAll .amb-row .f label,
+  body.printingAll #printAll .amb-row .f input,
+  body.printingAll #printAll .amb-row .f select{
+    max-width:100%!important;
+    min-width:0!important;
+    overflow:hidden!important;
+    white-space:nowrap!important;
+    text-overflow:ellipsis!important;
+  }
+  body.printingAll #printAll .amb-row .amb-del{
+    width:28px!important;
+    min-width:28px!important;
+    padding:2px!important;
+  }
+}
+
 </style></head><body>
 <header class='bar'>
   <span style='font-size:23px'>☰</span>
@@ -1000,6 +1037,8 @@ body.printingAll #printAll .sec h2{
 <script>
 const T=[['datos','▧ DATOS'],['terreno','▤ TERRENO'],['areas','▥ ÁREAS'],['cons','▧ CONSTR.'],['trag','▥ TRAGALUCES'],['amb','▤ AMBIENTES'],['obras','▧ OBRAS'],['serv','⚙ SERVICIOS'],['fotos','📷 FOTOS']];let page='datos';
 let d=JSON.parse(localStorage.getItem('vargoFicha')||'null')||{datos:{fecha:'',hora:'',lugar:'',coord:'',direccion:'',propietario:'',inspector:'',tipo:'',pisos:1,anio:''},terreno:{doc:'',campo:'',frente:'',fondo:'',der:'',izq:'',frentes:1,patio:'',jardin:'',otroLibre:'',patios:'',libre:'',forma:'',topo:'',acceso:''},floors:[],cons:[],trag:[],amb:[],obras:[],serv:{agua:'',aguaDetalle:'',desague:'',desagueDetalle:'',electricidad:'',electricidadDetalle:''},photos:[]};
+function normalizeCons(){if(!Array.isArray(d.cons))d.cons=[];d.cons=d.cons.map(x=>({...x,roofs:Array.isArray(x.roofs)?x.roofs:[]}));}
+normalizeCons();
 if(!d.serv)d.serv={agua:'',aguaDetalle:'',desague:'',desagueDetalle:'',electricidad:'',electricidadDetalle:''};
 function esc(x){return String(x??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;')}
 function num(v){if(v===null||v===undefined||v==='')return 0;let s=String(v).trim().replace(/\s/g,'').replace(',','.');let n=parseFloat(s);return Number.isFinite(n)?n:0}
@@ -1100,8 +1139,12 @@ function areas(a){
   <p class='hint'>Área libre = terreno − área ocupada del primer piso. Patio, jardín y otro son componentes del área libre.</p></div>
   <div class='sum'><b>Área construida total:</b> ${built.toFixed(2)} m² | <b>Área techada:</b> ${tech.toFixed(2)} m² | <b>Voladizos:</b> ${vol.toFixed(2)} m² | <b>Área ocupada:</b> ${ocup.toFixed(2)} m²</div>`);
 }
-function cons(a){let cards=d.cons.map((x,i)=>`<div class='card construction-card'><div class='head'>Construcción ${i+1}<button class='btn r' onclick='delCons(${i})'>Eliminar</button></div><div class='grid'>${s('Tipo','c.tipo',x.tipo,['Vivienda','Departamento','Local comercial','Oficina','Galpón','Nave industrial','Almacén','Taller','Cobertizo','Otro'])}${f('Uso','c.uso',x.uso)}${f('N.º de niveles','c.niv',x.niv,'number','min="1"')}${f('Área que ocupa (m²)','c.ocupa',x.ocupa,'number')}${f('Área construida total (m²)','c.tech',x.tech,'number')}${f('Año aprox.','c.anio',x.anio,'number')}${s('Material','c.mat',x.mat,['Ladrillo y cemento','Adobe','Concreto armado','Mixto','Otro'])}${s('Estado','c.est',x.est,['Muy bueno','Bueno','Regular','Malo','Muy malo'])}${f('Observaciones','c.obs',x.obs,'text','class="full"')}</div></div>`).join('');a.innerHTML=sec('4. CONSTRUCCIONES EXISTENTES',cards+`<button class='btn g' onclick='addCons()'>＋ AGREGAR CONSTRUCCIÓN</button><p class='hint'>Permite separar vivienda, galpón, nave industrial u otras construcciones dentro del mismo terreno.</p>`)}
-function addCons(){save(false);d.cons.push({tipo:'',uso:'',niv:1,ocupa:'',tech:'',anio:'',mat:'',est:'',obs:''});save(false);render()}function delCons(i){d.cons.splice(i,1);save(false);render()}
+function roofTypes(){return ['Aligerado','Losa maciza','Calamina','Calaminón','Teja','Fibrocemento','Policarbonato','Madera','Otro']}
+function roofRows(x,i){normalizeCons();x.roofs=x.roofs||[];return x.roofs.map((r,j)=>`<div class='roof-row' data-roof-row><select data-roof='tipo' data-ci='${i}' data-ri='${j}'><option value=''>Seleccionar...</option>${roofTypes().map(t=>`<option ${r.tipo===t?'selected':''}>${t}</option>`).join('')}</select><input type='text' inputmode='decimal' data-roof='area' data-ci='${i}' data-ri='${j}' value='${esc(r.area||'')}' placeholder='Área (m²)'><button class='btn r' type='button' onclick='delRoof(${i},${j})'>×</button></div>`).join('')}
+function constructionTypeAreas(x){return `<div class='subsection'><h3>ÁREAS CONSTRUIDAS POR TIPO</h3><div class='grid'>${f('Área construida de ladrillo/concreto (m²)','c.ladrillo',x.ladrillo||'','number','step="0.01"')}${f('Área construida de adobe (m²)','c.adobe',x.adobe||'','number','step="0.01"')}${f('Otras áreas construidas/techadas (m²)','c.otrasArea',x.otrasArea||'','number','step="0.01"')}</div><div class='sum'><b>Área construida por tipo:</b> ${(num(x.ladrillo)+num(x.adobe)+num(x.otrasArea)).toFixed(2)} m²</div></div>`}
+function cons(a){normalizeCons();let cards=d.cons.map((x,i)=>{const roofTotal=(x.roofs||[]).reduce((sum,r)=>sum+num(r.area),0);return `<div class='card construction-card'><div class='head'>Construcción ${i+1}<button class='btn r' onclick='delCons(${i})'>Eliminar</button></div><div class='grid'>${s('Tipo','c.tipo',x.tipo,['Vivienda','Departamento','Local comercial','Oficina','Galpón','Nave industrial','Almacén','Taller','Cobertizo','Otro'])}${f('Uso','c.uso',x.uso)}${f('N.º de niveles','c.niv',x.niv,'number','min="1"')}${f('Área que ocupa (m²)','c.ocupa',x.ocupa,'number')}${f('Área construida total (m²)','c.tech',x.tech,'number')}${f('Año aprox.','c.anio',x.anio,'number')}${s('Material predominante','c.mat',x.mat,['Ladrillo y cemento','Adobe','Concreto armado','Mixto','Estructura metálica','Otro'])}${s('Sistema constructivo','c.sistema',x.sistema,['Albañilería confinada','Concreto armado','Estructura metálica','Albañilería armada','Adobe','Mixto','Otro'])}${s('Muros','c.muros',x.muros,['Ladrillo','Bloque de concreto','Adobe','Concreto','Mixto','Otro'])}${s('Columnas','c.columnas',x.columnas,['Concreto armado','Metálicas','Madera','No presenta','Otro'])}${s('Vigas','c.vigas',x.vigas,['Concreto armado','Metálicas','Madera','No presenta','Otro'])}${s('Estado de conservación','c.est',x.est,['Muy bueno','Bueno','Regular','Malo','Muy malo'])}${f('Observaciones','c.obs',x.obs,'text','class="full"')}</div>${constructionTypeAreas(x)}<div class='subsection'><h3>TIPO DE TECHO / COBERTURA</h3><div class='roof-head'><span>Tipo</span><span>Área (m²)</span><span></span></div><div class='roof-list'>${roofRows(x,i)}</div><button class='btn' type='button' onclick='addRoof(${i})'>＋ AGREGAR TIPO DE TECHO</button><div class='sum'><b>Total área techada por cobertura:</b> ${roofTotal.toFixed(2)} m²</div></div></div>`}).join('');a.innerHTML=sec('4. CONSTRUCCIONES EXISTENTES',cards+`<button class='btn g' onclick='addCons()'>＋ AGREGAR CONSTRUCCIÓN</button><p class='hint'>Permite separar vivienda, galpón, nave industrial u otras construcciones dentro del mismo terreno.</p>`)}
+function addCons(){save(false);d.cons.push({tipo:'',uso:'',niv:1,ocupa:'',tech:'',anio:'',mat:'',sistema:'',muros:'',columnas:'',vigas:'',ladrillo:'',adobe:'',otrasArea:'',roofs:[],est:'',obs:''});save(false);render()}function delCons(i){d.cons.splice(i,1);save(false);render()}
+function addRoof(i){normalizeCons();d.cons[i].roofs=d.cons[i].roofs||[];d.cons[i].roofs.push({tipo:'',area:''});save(false);render()}function delRoof(i,j){normalizeCons();d.cons[i].roofs.splice(j,1);save(false);render()}
 function trag(a){
   const n=Math.max(0,+d.datos.pisos||0);
   d.trag=d.trag||[];
@@ -1130,7 +1173,31 @@ function trag(a){
 }
 function addTrag(){d.trag=d.trag||[];const ini=d.trag.length?d.trag[d.trag.length-1].fin||1:1;d.trag.push({ancho:'',largo:'',inicio:ini,fin:ini,obs:''});save(false);render()}
 function delTrag(i){d.trag.splice(i,1);save(false);render()}
-function amb(a){levels();let names=[['sala','Sala'],['com','Comedor'],['coc','Cocina'],['dorm','Dormitorios'],['ban','Baños'],['med','Medios baños'],['lav','Lavandería'],['est','Estudio'],['dep','Depósito'],['coch','Cochera'],['pat','Patio'],['otros','Otros']];d.amb=Array.from({length:d.floors.length},(_,i)=>d.amb[i]||Object.fromEntries(names.map(x=>[x[0],0])));a.innerHTML=sec('5. DISTRIBUCIÓN DE AMBIENTES',`<p class='hint'>No se solicitan medidas interiores. Solo cantidad por piso.</p>`+d.amb.map((x,i)=>`<div class='card'><div class='head'>${ordinal(i+1)}</div><div class='grid'>${names.map(n=>f(n[1],`amb.${i}.${n[0]}`,x[n[0]],'number','min="0"')).join('')}</div></div>`).join(''))}
+function amb(a){
+  levels();
+  const names=['Sala','Comedor','Cocina','Dormitorio','Baño','Medio baño','Lavandería','Estudio','Oficina','Tienda','Almacén','Depósito','Cochera','Patio','Terraza','Azotea','Hall / ingreso','Pasadizo','Escalera','Otro'];
+  d.amb=Array.from({length:d.floors.length},(_,i)=>{
+    const old=d.amb&&d.amb[i];
+    if(old&&Array.isArray(old.items)) return old;
+    if(old&&typeof old==='object'){
+      const items=[];
+      const map={sala:'Sala',com:'Comedor',coc:'Cocina',dorm:'Dormitorio',ban:'Baño',med:'Medio baño',lav:'Lavandería',est:'Estudio',dep:'Depósito',coch:'Cochera',pat:'Patio',otros:'Otro'};
+      Object.entries(old).forEach(([k,v])=>{if(num(v)>0)items.push({tipo:map[k]||'Otro',cantidad:num(v),obs:'',bano:''})});
+      return {items};
+    }
+    return {items:[]};
+  });
+  const rows=(x,i)=> (x.items||[]).map((r,j)=>`
+    <div class='amb-row'>
+      <div class='f'><label>Tipo de ambiente</label><select onchange="d.amb[${i}].items[${j}].tipo=this.value;d.amb[${i}].items[${j}].bano='';save(false);render()"><option value=''>Seleccionar...</option>${names.map(n=>`<option ${r.tipo===n?'selected':''}>${n}</option>`).join('')}</select></div>
+      <div class='f'><label>Cantidad</label><input type='number' min='1' step='1' value='${r.cantidad||1}' onchange="d.amb[${i}].items[${j}].cantidad=this.value;save(false)"></div>
+      <div class='f'><label>Observación (opcional)</label><input value='${esc(r.obs||'')}' onchange="d.amb[${i}].items[${j}].obs=this.value;save(false)"></div>
+      ${r.tipo==='Dormitorio'?`<div class='f'><label>Baño incorporado</label><select onchange="d.amb[${i}].items[${j}].bano=this.value;save(false);render()"><option value='' ${!r.bano?'selected':''}>Seleccionar...</option><option value='Sí' ${r.bano==='Sí'?'selected':''}>Con baño incorporado</option><option value='No' ${r.bano==='No'?'selected':''}>Sin baño</option></select></div>`:''}
+      <button class='btn r amb-del' type='button' onclick='d.amb[${i}].items.splice(${j},1);save(false);render()'>×</button>
+    </div>`).join('');
+  a.innerHTML=sec('5. DISTRIBUCIÓN DE AMBIENTES',`<p class='hint'>Selecciona los ambientes existentes. No se solicitan medidas interiores en esta pestaña; solo se registra la distribución y cantidad por piso.</p>`+d.amb.map((x,i)=>`<div class='card'><div class='head'>${ordinal(i+1)}</div><div class='amb-list'>${rows(x,i)||'<p class="hint">Aún no hay ambientes registrados en este piso.</p>'}</div><button class='btn' type='button' onclick='d.amb[${i}].items.push({tipo:"",cantidad:1,obs:"",bano:""});save(false);render()'>＋ AGREGAR AMBIENTE</button></div>`).join(''));
+}
+
 function obras(a){
   d.obras=d.obras||[];
   const cards=d.obras.map((x,i)=>{
@@ -1233,17 +1300,14 @@ function openPhotoFolder(folderId){
   panel.innerHTML=`
     <div class='photo-folder-panel-head'>
       <div><b>${folder.label}</b><small>${folder.desc}</small></div>
-      <div class="photo-actions">
-  <label class="btn photo-add-btn">
-    📷 TOMAR FOTO
-    <input class="noprint" type="file" accept="image/*" capture="environment" onchange='addPhotoToFolder(this, "${folderId}")' hidden>
-  </label>
-
-  <label class="btn photo-add-btn">
-    🖼️ GALERÍA
-    <input class="noprint" type="file" accept="image/*" onchange='addPhotoToFolder(this, "${folderId}")' hidden>
-  </label>
-</div>
+      <div class='photo-actions'>
+        <label class='btn photo-add-btn'>📷 TOMAR FOTO
+          <input class='noprint' type='file' accept='image/*' capture='environment' onchange='addPhotoToFolder(this,"${folderId}")' hidden>
+        </label>
+        <label class='btn photo-add-btn'>🖼️ GALERÍA
+          <input class='noprint' type='file' accept='image/*' onchange='addPhotoToFolder(this,"${folderId}")' hidden>
+        </label>
+      </div>
     </div>
     ${items.length?`<div class='photo-grid'>${items.map(p=>`
       <div class='photo'>
@@ -1351,7 +1415,10 @@ function updateObraCapacityOnly(inputEl){
       Total: <b>${totalCap.toFixed(2)} m³ = ${(totalCap*1000).toFixed(0)} litros</b>`;
   }
 }
+function updateConstructionTotals(card,idx){if(!card||!d.cons[idx])return;const x=d.cons[idx];const built=num(x.ladrillo)+num(x.adobe)+num(x.otrasArea);const roofs=(x.roofs||[]).reduce((sum,r)=>sum+num(r.area),0);const sums=card.querySelectorAll('.subsection .sum');if(sums[0])sums[0].innerHTML=`<b>Área construida por tipo:</b> ${built.toFixed(2)} m²`;if(sums[1])sums[1].innerHTML=`<b>Total área techada por cobertura:</b> ${roofs.toFixed(2)} m²`;}
+function roofInput(e){const el=e.target,ci=+el.dataset.ci,ri=+el.dataset.ri;if(!d.cons[ci]||!d.cons[ci].roofs[ri])return;d.cons[ci].roofs[ri][el.dataset.roof]=el.value;save(false);updateConstructionTotals(el.closest('.construction-card'),ci);}
 function bind(){
+  document.querySelectorAll('[data-roof]').forEach(e=>{e.addEventListener('input',roofInput);e.addEventListener('change',roofInput);});
   document.querySelectorAll("[data-k]").forEach(e=>{
     const handler=()=>{
       const key=e.dataset.k;
@@ -1365,7 +1432,7 @@ function bind(){
         const card=e.closest(".construction-card");
         const cards=[...document.querySelectorAll(".construction-card")];
         const idx=card ? cards.indexOf(card) : -1;
-        if(idx>=0 && d.cons[idx]) d.cons[idx][key.slice(2)]=v;
+        if(idx>=0 && d.cons[idx]){ d.cons[idx][key.slice(2)]=v; updateConstructionTotals(card,idx); }
       }else if(key.startsWith("o.")){
         const card=e.closest(".obra-card");
         const cards=[...document.querySelectorAll(".obra-card")];
