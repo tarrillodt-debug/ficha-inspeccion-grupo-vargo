@@ -1,4 +1,4 @@
-const CACHE_NAME = 'grupo-vargo-ficha-v1';
+const CACHE_NAME = 'grupo-vargo-ficha-v2';
 const APP_SHELL = [
   './',
   './index.html',
