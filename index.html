@@ -1507,162 +1507,17 @@ function areas(a){
 
     <div class="subsection">
 
-      <h3>ÁREA LIBRE DEL TERRENO</h3>
+    <h3>OBSERVACIÓN DE ÁREAS</h3>
 
-      <div class="grid">
-
-        <div class="f">
-
-          <label>
-            Área ocupada del 1.er piso (m²)
-          </label>
-
-          <input
-            class="readonly"
-            id="ocupadaTerreno"
-            value="${ocupadaPrimer.toFixed(2)}"
-            readonly
-          >
-
-        </div>
-
-
-        <div class="f">
-
-          <label>
-            Área libre del terreno (m²)
-          </label>
-
-          <input
-            class="readonly"
-            id="areaLibreCalc"
-            value="${libre.toFixed(2)}"
-            readonly
-          >
-
-        </div>
-
-
-        ${f(
-          'Patio del terreno (m²)',
-          'terreno.patio',
-          d.terreno.patio||'',
-          'number',
-          'step="0.01"'
-        )}
-
-
-        ${f(
-          'Jardín (m²)',
-          'terreno.jardin',
-          d.terreno.jardin||'',
-          'number',
-          'step="0.01"'
-        )}
-
-
-        ${f(
-          'Otro espacio libre (m²)',
-          'terreno.otroLibre',
-          d.terreno.otroLibre||'',
-          'number',
-          'step="0.01"'
-        )}
-
-
-        <div class="f">
-
-          <label>
-            Tragaluz total (m²)
-          </label>
-
-          <input
-            class="readonly"
-            id="tragTotal"
-            value="${tragTotal.toFixed(2)}"
-            readonly
-          >
-
-        </div>
-
-      </div>
-
-
-      <div class="sum">
-
-        <b>Área libre disponible:</b>
-
-        <span id="libreDisponible">
-          ${libre.toFixed(2)}
-        </span>
-
-        m²
-
-      </div>
-
-
-      <p class="hint">
-        El área ocupada del primer nivel corresponde al
-        <b>Área según documentación</b> registrada en la sección
-        de terreno.
-      </p>
-
-    </div>
-
-
-    <div class="subsection">
-
-      <h3>RESUMEN DE ÁREAS</h3>
-
-      <div class="grid">
-
-        <div class="f">
-
-          <label>
-            Área techada total (m²)
-          </label>
-
-          <input
-            class="readonly"
-            value="${tech.toFixed(2)}"
-            readonly
-          >
-
-        </div>
-
-
-        <div class="f">
-
-          <label>
-            Área de voladizos total (m²)
-          </label>
-
-          <input
-            class="readonly"
-            value="${vol.toFixed(2)}"
-            readonly
-          >
-
-        </div>
-
-
-        <div class="f">
-
-          <label>
-            Tragaluz total (m²)
-          </label>
-
-          <input
-            class="readonly"
-            value="${tragTotal.toFixed(2)}"
-            readonly
-          >
-
-        </div>
-
-      </div>
-
-    </div>
+<div class="f">
+  <textarea
+    id="obsAreas"
+    rows="5"
+    placeholder="Ingrese aquí las observaciones relacionadas con las áreas del inmueble. Ej.: patio delantero, patio posterior, jardín, distribución de áreas, etc."
+    oninput="d.obsAreas=this.value;save(false)"
+    style="width:100%;resize:vertical;"
+  >${d.obsAreas||''}</textarea>
+</div>  
 
     `
   );
