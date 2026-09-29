@@ -1255,15 +1255,14 @@ function areas(a){
      TRAGALUCES POR NIVEL
      ========================================= */
 
-  function tragaluzPiso(piso){
+ function tragaluzPiso(piso){
 
-    return (d.tragl||[]).reduce((sum,x)=>{
+  return (d.trag||[]).reduce((sum,x)=>{
 
-      const area=num(x.ancho)*num(x.largo);
+    const area=num(x.ancho)*num(x.largo);
 
-      const inicio=parseInt(x.pisoInicio,10)||0;
-      const fin=parseInt(x.pisoFin,10)||inicio;
-
+    const inicio=parseInt(x.inicio,10)||1;
+    const fin=parseInt(x.fin,10)||inicio;
       if(
         area>0 &&
         piso>=inicio &&
@@ -1412,13 +1411,13 @@ function areas(a){
      El tragaluz se suma una sola vez,
      aunque atraviese varios pisos.
   */
-  const tragTotal=(d.tragl||[]).reduce(
-    (sum,x)=>
-      sum+
-      num(x.ancho)*
-      num(x.largo),
-    0
-  );
+  const tragTotal=(d.trag||[]).reduce(
+  (sum,x)=>
+    sum+
+    num(x.ancho)*
+    num(x.largo),
+  0
+);
 
 
   /* =========================================
