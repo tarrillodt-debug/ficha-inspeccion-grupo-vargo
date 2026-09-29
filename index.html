@@ -1226,12 +1226,10 @@ function levels(){
   }
 
   d.floors.forEach((x,i)=>{
-    if(x.base===undefined || x.base===''){
-      if(i===0 && d.terreno?.doc){
-        x.base=d.terreno.doc;
-      }else{
-        x.base='';
-      }
+    if(i===0){
+       x.base=d.terreno?.doc||'';
+    }else{
+      if(x.base===undefined) x.base='';
     }
 
     if(x.patio===undefined) x.patio='';
