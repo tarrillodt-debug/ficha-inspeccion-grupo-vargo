@@ -1037,6 +1037,7 @@ body.printingAll #printAll .sec h2{
 <script>
 const T=[['datos','▧ DATOS GENERALES'],['terreno','▤ TERRENO'],['areas','▥ ÁREAS'],['amb','▤ AMBIENTES'],['obras','▦ CONSTRUCCIONES SECUNDARIAS'],['serv','⚙ SERVICIOS'],['fotos','📷 FOTOS']];
 let d=JSON.parse(localStorage.getItem('vargoFicha')||'null')||{datos:{fecha:'',hora:'',lugar:'',coord:'',direccion:'',propietario:'',inspector:'',tipo:'',pisos:1,anio:''},terreno:{doc:'',campo:'',frente:'',fondo:'',der:'',izq:'',frentes:1,patio:'',jardin:'',otroLibre:'',patios:'',libre:'',forma:'',topo:'',accesoObs:''},floors:[],cons:[],trag:[],amb:[],obras:[],serv:{agua:'',aguaDetalle:'',desague:'',desagueDetalle:'',electricidad:'',electricidadDetalle:''},photos:[]};
+let page='datos';
 function normalizeCons(){if(!Array.isArray(d.cons))d.cons=[];d.cons=d.cons.map(x=>({...x,roofs:Array.isArray(x.roofs)?x.roofs:[]}));}
 normalizeCons();
 if(!d.serv)d.serv={agua:'',aguaDetalle:'',desague:'',desagueDetalle:'',electricidad:'',electricidadDetalle:''};
