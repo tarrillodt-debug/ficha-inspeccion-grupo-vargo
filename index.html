@@ -1091,18 +1091,116 @@ function datos(a){
     tipoInspeccion()==='terreno'?`<div class='dept-notice'><b>TERRENO:</b> se habilitan únicamente <b>DATOS GENERALES, TERRENO, OBRAS y FOTOS</b>. En OBRAS podrás registrar, por ejemplo, cerco perimetral, portón, vereda u otra obra existente; si el terreno está vacío, puedes dejar OBRAS sin registros.</div>`:'';
   a.innerHTML=aviso+sec('1. DATOS GENERALES',`<div class='grid'>${f('Fecha de inspección','datos.fecha',d.datos.fecha,'date')}${f('Hora','datos.hora',d.datos.hora,'time')}${f('Lugar','datos.lugar',d.datos.lugar)}${f('Coordenadas de ubicación','datos.coord',d.datos.coord)}${f('Dirección de la propiedad','datos.direccion',d.datos.direccion,'text','class="full"')}${f('Propietario','datos.propietario',d.datos.propietario)}${f('Inspector','datos.inspector',d.datos.inspector)}${s('Tipo de inmueble','datos.tipo',d.datos.tipo,['Terreno','Vivienda','Departamento','Local comercial','Oficina','Nave industrial','Galpón','Almacén','Taller','Otro'])}${f('Número de pisos','datos.pisos',d.datos.pisos,'number','min="0"')}</div><p class='hint'>Datos mínimos definidos para la inspección. Las coordenadas pueden escribirse manualmente.</p>`)}
 function terreno(a){
-  a.innerHTML=sec('2. TERRENO',`<div class='grid'>
-  ${f('Área según documentación (m²)','terreno.doc',d.terreno.doc,'number','step="0.01"')}
-  ${f('Área verificada en campo (m²)','terreno.campo',d.terreno.campo,'number','step="0.01"')}
-  ${f('Frente (m)','terreno.frente',d.terreno.frente,'number','step="0.01"')}
-  ${f('Fondo (m)','terreno.fondo',d.terreno.fondo,'number','step="0.01"')}
-  ${f('Lado derecho (m)','terreno.der',d.terreno.der,'number','step="0.01"')}
-  ${f('Lado izquierdo (m)','terreno.izq',d.terreno.izq,'number','step="0.01"')}
-  ${f('N.º de frentes','terreno.frentes',d.terreno.frentes,'number','min="1"')}
-  ${s('Forma','terreno.forma',d.terreno.forma,['Regular','Irregular'])}
-  ${s('Topografía','terreno.topo',d.terreno.topo,['Plana','Inclinada','Accidentada'])}
-  ${f('Observación de acceso (solo si hay pasadizo o acceso interior)','terreno.accesoObs',d.terreno.accesoObs,'text','class="full" placeholder="Ej. Pasadizo interior distinto al frente, longitud hasta la propiedad..."')}
-  </div><p class='hint'>Aquí se registran las características del lote. Las áreas ocupadas, libres y su distribución están en ÁREAS.</p>`);
+  a.innerHTML=sec('2. TERRENO',`
+
+  <div class="subsection">
+    <h3>ÁREAS DEL TERRENO</h3>
+
+    <div class="grid">
+
+      ${f(
+        'Área según documentación (m²)',
+        'terreno.doc',
+        d.terreno.doc,
+        'number',
+        'step="0.01"'
+      )}
+
+      ${f(
+        'Área verificada en campo (m²)',
+        'terreno.campo',
+        d.terreno.campo,
+        'number',
+        'step="0.01"'
+      )}
+
+    </div>
+
+    <p class="hint">
+      El área según documentación y el área verificada en campo
+      son datos independientes y no se modifican entre sí.
+    </p>
+  </div>
+
+  <div class="subsection">
+    <h3>DIMENSIONES DEL TERRENO</h3>
+
+    <div class="grid">
+
+      ${f(
+        'Frente (m)',
+        'terreno.frente',
+        d.terreno.frente,
+        'number',
+        'step="0.01"'
+      )}
+
+      ${f(
+        'Fondo (m)',
+        'terreno.fondo',
+        d.terreno.fondo,
+        'number',
+        'step="0.01"'
+      )}
+
+      ${f(
+        'Lado derecho (m)',
+        'terreno.der',
+        d.terreno.der,
+        'number',
+        'step="0.01"'
+      )}
+
+      ${f(
+        'Lado izquierdo (m)',
+        'terreno.izq',
+        d.terreno.izq,
+        'number',
+        'step="0.01"'
+      )}
+
+      ${f(
+        'N.º de frentes',
+        'terreno.frentes',
+        d.terreno.frentes,
+        'number',
+        'min="1"'
+      )}
+
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>CARACTERÍSTICAS DEL TERRENO</h3>
+
+    <div class="grid">
+
+      ${s(
+        'Forma',
+        'terreno.forma',
+        d.terreno.forma,
+        ['Regular','Irregular']
+      )}
+
+      ${s(
+        'Topografía',
+        'terreno.topo',
+        d.terreno.topo,
+        ['Plana','Inclinada','Accidentada']
+      )}
+
+      ${f(
+        'Observación de acceso',
+        'terreno.accesoObs',
+        d.terreno.accesoObs,
+        'text',
+        'class="full" placeholder="Ej. Acceso directo desde vía pública, pasadizo interior, ingreso común..."'
+      )}
+
+    </div>
+  </div>
+
+  `);
 }
 function levels(){
   const n=Math.max(0,parseInt(d.datos.pisos,10)||0);
