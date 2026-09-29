@@ -1090,8 +1090,8 @@ function render(){let a=main;if(page==='datos')datos(a);if(page==='terreno')terr
 function datos(a){
   const aviso=isDepartamento()?`<div class='dept-notice'><b>DEPARTAMENTO:</b> se habilitan únicamente <b>DATOS GENERALES, AMBIENTES y FOTOS</b>. Las demás secciones quedan bloqueadas porque no forman parte de esta verificación.</div>`:
     tipoInspeccion()==='terreno'?`<div class='dept-notice'><b>TERRENO:</b> se habilitan únicamente <b>DATOS GENERALES, TERRENO, OBRAS y FOTOS</b>. En OBRAS podrás registrar, por ejemplo, cerco perimetral, portón, vereda u otra obra existente; si el terreno está vacío, puedes dejar OBRAS sin registros.</div>`:'';
-  a.innerHTML=aviso+sec('1. DATOS GENERALES',`<div class='grid'>${f('Fecha de inspección','datos.fecha',d.datos.fecha,'date')}${f('Hora','datos.hora',d.datos.hora,'time')}${f('Lugar','datos.lugar',d.datos.lugar)}${f('Coordenadas de ubicación','datos.coord',d.datos.coord)}${f('Dirección de la propiedad','datos.direccion',d.datos.direccion,'text','class="full"')}${f('Propietario','datos.propietario',d.datos.propietario)}${f('Inspector','datos.inspector',d.datos.inspector)}${s('Tipo de inmueble','datos.tipo',d.datos.tipo,['Terreno','Vivienda','Departamento','Local comercial','Oficina','Nave industrial','Galpón','Almacén','Taller','Otro'])}${f('Número de pisos','datos.pisos',d.datos.pisos,'number','min="0"')}</div><p class='hint'>Datos mínimos definidos para la inspección. Las coordenadas pueden escribirse manualmente.</p>`)}
-function terreno(a){
+${s('Tipo de inmueble','datos.tipo',d.datos.tipo,['Casa / Vivienda','Departamento','Stand / Local','Edificio de usos múltiples','Almacén','Fábrica / Planta industrial','Terreno / Lote','Terreno industrial','Terreno agrícola','Inmueble de uso mixto','Otro'])}
+ function terreno(a){
   a.innerHTML=sec('2. TERRENO',`
 
   <div class="subsection">
