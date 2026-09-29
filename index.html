@@ -1204,43 +1204,375 @@ function terreno(a){
 }
 function levels(){
   const n=Math.max(0,parseInt(d.datos.pisos,10)||0);
+
   if(!Array.isArray(d.floors)) d.floors=[];
+
   while(d.floors.length<n){
-    d.floors.push({anio:'',tech:'',voladizo:'',obs:'',libre:'',ocup:''});
+    const i=d.floors.length;
+
+    d.floors.push({
+      anio:'',
+      base:i===0 ? (d.terreno?.doc||'') : '',
+      patio:'',
+      trag:'',
+      tech:'',
+      voladizo:'',
+      obs:''
+    });
   }
-  if(d.floors.length>n) d.floors=d.floors.slice(0,n);
+
+  if(d.floors.length>n){
+    d.floors=d.floors.slice(0,n);
+  }
+
+  d.floors.forEach((x,i)=>{
+    if(x.base===undefined || x.base===''){
+      if(i===0 && d.terreno?.doc){
+        x.base=d.terreno.doc;
+      }else{
+        x.base='';
+      }
+    }
+
+    if(x.patio===undefined) x.patio='';
+    if(x.trag===undefined) x.trag='';
+
+    if(x.voladizo===undefined) x.voladizo='';
+    if(x.anio===undefined) x.anio='';
+    if(x.obs===undefined) x.obs='';
+
+    const base=num(x.base);
+    const patio=num(x.patio);
+    const trag=num(x.trag);
+
+    x.tech=Math.max(0,base-patio-trag).toFixed(2);
+  });
 }
 function ordinal(n){let x=['1.er piso','2.º piso','3.er piso','4.º piso','5.º piso','6.º piso','7.º piso','8.º piso','9.º piso','10.º piso','11.º piso','12.º piso'];return x[n-1]||n+'.º piso'}
 function areas(a){
+
   const rows=d.floors.map((x,i)=>{
-    return `<tr class='area-row'><td>${ordinal(i+1)}</td>
-      <td><input type='text' inputmode='numeric' data-a='floors' data-i='${i}' data-f='anio' value='${esc(x.anio||'')}' placeholder='Año'></td>
-      <td><input type='text' inputmode='decimal' autocomplete='off' data-a='floors' data-i='${i}' data-f='tech' value='${esc(x.tech||'')}'></td>
-      <td><input type='text' inputmode='decimal' autocomplete='off' data-a='floors' data-i='${i}' data-f='voladizo' value='${esc(x.voladizo||'')}'></td>
-      <td><input type='text' data-a='floors' data-i='${i}' data-f='obs' value='${esc(x.obs||'')}'></td></tr>`;
+
+    const base=num(x.base);
+    const patio=num(x.patio);
+    const trag=num(x.trag);
+
+    const tech=Math.max(0,base-patio-trag);
+
+    x.tech=tech.toFixed(2);
+
+    return `
+      <tr class="area-row">
+
+        <td>
+          <b>${ordinal(i+1)}</b>
+        </td>
+
+        <td>
+          <input
+            type="text"
+            inputmode="decimal"
+            autocomplete="off"
+            data-a="floors"
+            data-i="${i}"
+            data-f="anio"
+            value="${esc(x.anio||'')}"
+            placeholder="Año"
+          >
+        </td>
+
+        <td>
+          <input
+            type="text"
+            inputmode="decimal"
+            autocomplete="off"
+            data-a="floors"
+            data-i="${i}"
+            data-f="base"
+            value="${esc(x.base||'')}"
+            placeholder="Área base"
+          >
+        </td>
+
+        <td>
+          <input
+            type="text"
+            inputmode="decimal"
+            autocomplete="off"
+            data-a="floors"
+            data-i="${i}"
+            data-f="patio"
+            value="${esc(x.patio||'')}"
+            placeholder="0.00"
+          >
+        </td>
+
+        <td>
+          <input
+            type="text"
+            inputmode="decimal"
+            autocomplete="off"
+            data-a="floors"
+            data-i="${i}"
+            data-f="trag"
+            value="${esc(x.trag||'')}"
+            placeholder="0.00"
+          >
+        </td>
+
+        <td>
+          <input
+            class="readonly"
+            type="text"
+            value="${tech.toFixed(2)}"
+            readonly
+          >
+        </td>
+
+        <td>
+          <input
+            type="text"
+            inputmode="decimal"
+            autocomplete="off"
+            data-a="floors"
+            data-i="${i}"
+            data-f="voladizo"
+            value="${esc(x.voladizo||'')}"
+            placeholder="0.00"
+          >
+        </td>
+
+        <td>
+          <input
+            type="text"
+            data-a="floors"
+            data-i="${i}"
+            data-f="obs"
+            value="${esc(x.obs||'')}"
+            placeholder="Observación"
+          >
+        </td>
+
+      </tr>
+    `;
   }).join('');
-  const tech=d.floors.reduce((s,x)=>s+num(x.tech),0),vol=d.floors.reduce((s,x)=>s+num(x.voladizo),0);
-  const terreno=num(d.terreno.campo||d.terreno.doc), ocupadaPrimer=num(d.floors[0]?.tech), libre=Math.max(0,terreno-ocupadaPrimer);
+
+  const tech=d.floors.reduce(
+    (s,x)=>s+num(x.tech),
+    0
+  );
+
+  const vol=d.floors.reduce(
+    (s,x)=>s+num(x.voladizo),
+    0
+  );
+
+  const ocupadaPrimer=num(d.terreno?.doc);
+
+  const patioTerreno=num(d.terreno?.patio);
+  const jardin=num(d.terreno?.jardin);
+  const otro=num(d.terreno?.otroLibre);
+
+  const terrenoDoc=num(d.terreno?.doc);
+
+  const libre=Math.max(
+    0,
+    terrenoDoc-ocupadaPrimer
+  );
+
+  const tragTotal=d.floors.reduce(
+    (s,x)=>s+num(x.trag),
+    0
+  );
+
   d.terreno.libre=libre.toFixed(2);
-  const patio=num(d.terreno.patio),jardin=num(d.terreno.jardin),otro=num(d.terreno.otroLibre);
-  const tragTotal=(d.trag||[]).reduce((sum,x)=>sum+num(x.ancho)*num(x.largo),0);
-  const dist=patio+jardin+otro+tragTotal;
-  a.innerHTML=sec('3. ÁREAS DE LA EDIFICACIÓN POR NIVEL',`
-  <p class='hint'>Registro simple por piso: área techada y año aproximado de construcción. El voladizo/alero se registra en cualquier nivel cuando corresponda. El área libre se registra aparte para el terreno.</p>
-  <div class='tablewrap'><table class='tbl'><tr><th>NIVEL</th><th>AÑO APROX.</th><th>ÁREA TECHADA (m²)</th><th>VOLADIZO (m²)</th><th>OBS.</th></tr>${rows}
-  <tr><th>TOTAL</th><th></th><th id='totalTech'>${tech.toFixed(2)}</th><th id='totalVol'>${vol.toFixed(2)}</th><th></th></tr></table></div>
-  <div class='subsection'><h3>ÁREA LIBRE DEL TERRENO</h3><div class='grid'>
-    <div class='f'><label>Área ocupada del 1.er piso (m²)</label><input class='readonly' id='ocupadaTerreno' value='${ocupadaPrimer.toFixed(2)}' readonly></div>
-    <div class='f'><label>Área libre (m²)</label><input class='readonly' id='areaLibreCalc' value='${libre.toFixed(2)}' readonly></div>
-    ${f('Patio (m²)','terreno.patio',d.terreno.patio||'','number','step="0.01"')}
-    ${f('Jardín (m²)','terreno.jardin',d.terreno.jardin||'','number','step="0.01"')}
-    ${f('Otro espacio libre (m²)','terreno.otroLibre',d.terreno.otroLibre||'','number','step="0.01"')}
-    <div class='f'><label>Tragaluz total (m²)</label><input class='readonly' value='${tragTotal.toFixed(2)}' readonly></div>
-  </div>
-  <div class='sum'><b>Área libre disponible:</b> <span id='libreDisponible'>${libre.toFixed(2)}</span> m² &nbsp;|&nbsp; <b>Distribución registrada:</b> <span id='libreDistribuido'>${dist.toFixed(2)}</span> m²</div>
-  <div id='libreAlert' class='warn' style='display:${dist>libre+0.0001?'block':'none'}'>⚠️ La distribución registrada supera el área libre disponible.</div>
-  <p class='hint'>El tragaluz se muestra aquí como componente de la información de espacios libres/no construidos, conforme al formato solicitado.</p></div>
-  <div class='sum'><b>Área techada total:</b> ${tech.toFixed(2)} m² | <b>Voladizos:</b> ${vol.toFixed(2)} m²</div>`);
+
+  a.innerHTML=sec(
+    '3. ÁREAS DE LA EDIFICACIÓN POR NIVEL',
+    `
+
+    <p class="hint">
+      Cada nivel se registra de manera independiente.
+      El área techada se calcula automáticamente como:
+      <b>Área base − Área no techada − Tragaluz</b>.
+      Los pisos superiores no se calculan tomando automáticamente
+      el área del terreno.
+    </p>
+
+    <div class="tablewrap">
+
+      <table class="tbl">
+
+        <tr>
+          <th>NIVEL</th>
+          <th>AÑO APROX.</th>
+          <th>ÁREA BASE<br>(m²)</th>
+          <th>ÁREA NO TECHADA<br>(m²)</th>
+          <th>TRAGALUZ<br>(m²)</th>
+          <th>ÁREA TECHADA<br>(m²)</th>
+          <th>VOLADIZO<br>(m²)</th>
+          <th>OBS.</th>
+        </tr>
+
+        ${rows}
+
+        <tr>
+          <th colspan="5">TOTAL</th>
+
+          <th id="totalTech">
+            ${tech.toFixed(2)}
+          </th>
+
+          <th id="totalVol">
+            ${vol.toFixed(2)}
+          </th>
+
+          <th></th>
+        </tr>
+
+      </table>
+
+    </div>
+
+    <div class="subsection">
+
+      <h3>ÁREA LIBRE DEL TERRENO</h3>
+
+      <div class="grid">
+
+        <div class="f">
+          <label>
+            Área ocupada del 1.er piso (m²)
+          </label>
+
+          <input
+            class="readonly"
+            id="ocupadaTerreno"
+            value="${ocupadaPrimer.toFixed(2)}"
+            readonly
+          >
+        </div>
+
+        <div class="f">
+          <label>
+            Área libre del terreno (m²)
+          </label>
+
+          <input
+            class="readonly"
+            id="areaLibreCalc"
+            value="${libre.toFixed(2)}"
+            readonly
+          >
+        </div>
+
+        ${f(
+          'Patio del terreno (m²)',
+          'terreno.patio',
+          d.terreno.patio||'',
+          'number',
+          'step="0.01"'
+        )}
+
+        ${f(
+          'Jardín (m²)',
+          'terreno.jardin',
+          d.terreno.jardin||'',
+          'number',
+          'step="0.01"'
+        )}
+
+        ${f(
+          'Otro espacio libre (m²)',
+          'terreno.otroLibre',
+          d.terreno.otroLibre||'',
+          'number',
+          'step="0.01"'
+        )}
+
+        <div class="f">
+          <label>
+            Tragaluz total (m²)
+          </label>
+
+          <input
+            class="readonly"
+            id="tragTotal"
+            value="${tragTotal.toFixed(2)}"
+            readonly
+          >
+        </div>
+
+      </div>
+
+      <div class="sum">
+
+        <b>Área libre disponible:</b>
+
+        <span id="libreDisponible">
+          ${libre.toFixed(2)}
+        </span>
+
+        m²
+
+      </div>
+
+      <p class="hint">
+        El área ocupada del primer nivel corresponde al
+        <b>Área según documentación</b> registrada en la sección
+        de terreno.
+      </p>
+
+    </div>
+
+    <div class="subsection">
+
+      <h3>RESUMEN DE ÁREAS</h3>
+
+      <div class="grid">
+
+        <div class="f">
+          <label>
+            Área techada total (m²)
+          </label>
+
+          <input
+            class="readonly"
+            value="${tech.toFixed(2)}"
+            readonly
+          >
+        </div>
+
+        <div class="f">
+          <label>
+            Área de voladizos total (m²)
+          </label>
+
+          <input
+            class="readonly"
+            value="${vol.toFixed(2)}"
+            readonly
+          >
+        </div>
+
+        <div class="f">
+          <label>
+            Tragaluz total (m²)
+          </label>
+
+          <input
+            class="readonly"
+            value="${tragTotal.toFixed(2)}"
+            readonly
+          >
+        </div>
+
+      </div>
+
+    </div>
+
+    `
+  );
 }
 function roofTypes(){return ['Aligerado','Losa maciza','Calamina','Calaminón','Teja','Fibrocemento','Policarbonato','Madera','Otro']}
 function roofRows(x,i){normalizeCons();x.roofs=x.roofs||[];return x.roofs.map((r,j)=>`<div class='roof-row' data-roof-row><select data-roof='tipo' data-ci='${i}' data-ri='${j}'><option value=''>Seleccionar...</option>${roofTypes().map(t=>`<option ${r.tipo===t?'selected':''}>${t}</option>`).join('')}</select><input type='text' inputmode='decimal' data-roof='area' data-ci='${i}' data-ri='${j}' value='${esc(r.area||'')}' placeholder='Área (m²)'><button class='btn r' type='button' onclick='delRoof(${i},${j})'>×</button></div>`).join('')}
