@@ -1288,9 +1288,11 @@ function areas(a){
     const trag=tragaluzPiso(i+1);
 
     /* Área techada automática */
+    const voladizo=num(x.voladizo);
+
     const tech=Math.max(
       0,
-      base-patio-trag
+      base-patio-trag+voladizo
     );
 
     x.trag=trag.toFixed(2);
