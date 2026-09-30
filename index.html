@@ -1979,7 +1979,7 @@ x.tech=tech.toFixed(2);
         correspondientes a cada nivel.
       </p>
 
-      ${d.floors.map((x,i)=>`
+      ${d.floors.map((x,i)=>i===0 ? `
 
         <div class="card">
 
@@ -2063,7 +2063,7 @@ x.tech=tech.toFixed(2);
 
         </div>
 
-      `).join('')}
+      ` : '').join('')}
 
     </div>
 
