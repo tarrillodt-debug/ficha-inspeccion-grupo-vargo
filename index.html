@@ -1265,45 +1265,25 @@ function levels(){
 function ordinal(n){let x=['1.er piso','2.º piso','3.er piso','4.º piso','5.º piso','6.º piso','7.º piso','8.º piso','9.º piso','10.º piso','11.º piso','12.º piso'];return x[n-1]||n+'.º piso'}
 function areas(a){
 
-  /* =========================================
-     TRAGALUCES POR NIVEL
-     ========================================= */
+  function tragaluzPiso(piso){
+    return (d.trag||[]).reduce((sum,x)=>{
+      const area=num(x.ancho)*num(x.largo);
+      const inicio=parseInt(x.inicio,10)||1;
+      const fin=parseInt(x.fin,10)||inicio;
 
- function tragaluzPiso(piso){
-
-  return (d.trag||[]).reduce((sum,x)=>{
-
-    const area=num(x.ancho)*num(x.largo);
-
-    const inicio=parseInt(x.inicio,10)||1;
-    const fin=parseInt(x.fin,10)||inicio;
-      if(
-        area>0 &&
-        piso>=inicio &&
-        piso<=fin
-      ){
+      if(area>0 && piso>=inicio && piso<=fin){
         return sum+area;
       }
 
       return sum;
-
     },0);
-
   }
-
-  /* =========================================
-     FILAS POR NIVEL
-     ========================================= */
 
   const rows=d.floors.map((x,i)=>{
 
     const base=num(x.base);
     const patio=num(x.patio);
-
-    /* Tragaluz que realmente atraviesa este piso */
     const trag=tragaluzPiso(i+1);
-
-    /* Área techada automática */
     const voladizo=num(x.voladizo);
 
     const tech=Math.max(
@@ -1324,8 +1304,7 @@ function areas(a){
         <td>
           <input
             type="text"
-            inputmode="decimal"
-            autocomplete="off"
+            inputmode="numeric"
             data-a="floors"
             data-i="${i}"
             data-f="anio"
@@ -1338,12 +1317,12 @@ function areas(a){
           <input
             type="text"
             inputmode="decimal"
-            autocomplete="off"
             data-a="floors"
             data-i="${i}"
             data-f="base"
             value="${esc(x.base||'')}"
-            placeholder="Área base"
+            placeholder="Área"
+            ${i===0?'readonly':''}
           >
         </td>
 
@@ -1351,7 +1330,6 @@ function areas(a){
           <input
             type="text"
             inputmode="decimal"
-            autocomplete="off"
             data-a="floors"
             data-i="${i}"
             data-f="patio"
@@ -1382,7 +1360,6 @@ function areas(a){
           <input
             type="text"
             inputmode="decimal"
-            autocomplete="off"
             data-a="floors"
             data-i="${i}"
             data-f="voladizo"
@@ -1404,13 +1381,7 @@ function areas(a){
 
       </tr>
     `;
-
   }).join('');
-
-
-  /* =========================================
-     TOTALES
-     ========================================= */
 
   const tech=d.floors.reduce(
     (s,x)=>s+num(x.tech),
@@ -1422,43 +1393,142 @@ function areas(a){
     0
   );
 
-  /* 
-     IMPORTANTE:
-     El tragaluz se suma una sola vez,
-     aunque atraviese varios pisos.
-  */
-  const tragTotal=(d.trag||[]).reduce(
-  (sum,x)=>
-    sum+
-    num(x.ancho)*
-    num(x.largo),
-  0
-);
+  const ocupadaPrimer=num(d.terreno?.doc);
+  const terrenoDoc=num(d.terreno?.doc);
 
-
-  /* =========================================
-     ÁREA DEL TERRENO
-     ========================================= */
-
-  const ocupadaPrimer=num(
-    d.terreno?.doc
-  );
-
-  const terrenoDoc=num(
-    d.terreno?.doc
-  );
-
-  const libre=Math.max(
+  d.terreno.libre=Math.max(
     0,
     terrenoDoc-ocupadaPrimer
+  ).toFixed(2);
+
+  /* ================================
+     TRAGALUCES
+     ================================ */
+
+  d.trag=d.trag||[];
+
+  const tragCards=d.trag.map((x,i)=>{
+
+    const ancho=num(x.ancho);
+    const largo=num(x.largo);
+    const area=ancho*largo;
+
+    const maxP=Math.max(1,+d.datos.pisos||1);
+
+    const inicio=Math.max(
+      1,
+      Math.min(maxP,+x.inicio||1)
+    );
+
+    const fin=Math.max(
+      inicio,
+      Math.min(maxP,+x.fin||inicio)
+    );
+
+    const niveles=fin-inicio+1;
+
+    return `
+      <div class="card tragaluz-card">
+
+        <div class="head">
+          <b>Tragaluz ${i+1}</b>
+          <button
+            class="btn r"
+            type="button"
+            onclick="delTrag(${i})"
+          >
+            Eliminar
+          </button>
+        </div>
+
+        <div class="grid">
+
+          ${f(
+            'Ancho (m)',
+            't.ancho',
+            x.ancho,
+            'number',
+            'step="0.01" min="0" placeholder="Ej. 1.20"'
+          )}
+
+          ${f(
+            'Largo (m)',
+            't.largo',
+            x.largo,
+            'number',
+            'step="0.01" min="0" placeholder="Ej. 2.00"'
+          )}
+
+          <div class="f">
+            <label>Área del tragaluz (m²)</label>
+            <input
+              class="readonly"
+              type="text"
+              value="${area.toFixed(2)}"
+              readonly
+            >
+          </div>
+
+          ${f(
+            'Piso inicial',
+            't.inicio',
+            x.inicio||1,
+            'number',
+            `min="1" max="${maxP}"`
+          )}
+
+          ${f(
+            'Piso final',
+            't.fin',
+            x.fin||x.inicio||1,
+            'number',
+            `min="1" max="${maxP}"`
+          )}
+
+          <div class="f">
+            <label>N.º de niveles que atraviesa</label>
+            <input
+              class="readonly"
+              type="text"
+              value="${niveles}"
+              readonly
+            >
+          </div>
+
+          ${f(
+            'Descripción / ubicación',
+            't.obs',
+            x.obs,
+            'text',
+            'class="full" placeholder="Ej. tragaluz central junto a escalera"'
+          )}
+
+        </div>
+
+        <div class="sum">
+          <b>Resultado:</b>
+          ${ancho.toFixed(2)} × ${largo.toFixed(2)}
+          =
+          <b>${area.toFixed(2)} m²</b>
+          &nbsp; | &nbsp;
+          Desde <b>${ordinal(inicio)}</b>
+          hasta <b>${ordinal(fin)}</b>
+          &nbsp; | &nbsp;
+          <b>${niveles}</b> nivel(es)
+        </div>
+
+      </div>
+    `;
+  }).join('');
+
+  const tragTotal=(d.trag||[]).reduce(
+    (sum,x)=>sum+num(x.ancho)*num(x.largo),
+    0
   );
 
-  d.terreno.libre=libre.toFixed(2);
-
-
-  /* =========================================
-     RENDER
-     ========================================= */
+  /* ================================
+     MOSTRAR TODO
+     ================================ */
 
   a.innerHTML=sec(
     '3. ÁREAS DE LA EDIFICACIÓN POR NIVEL',
@@ -1467,9 +1537,8 @@ function areas(a){
     <p class="hint">
       Cada nivel se registra de manera independiente.
       El área techada se calcula automáticamente como:
-      <b>Área base − Área no techada − Tragaluz</b>.
-      El tragaluz se descuenta en cada nivel que atraviesa,
-      pero su área total se contabiliza una sola vez.
+      <b>Área ocupada − Área no techada − Tragaluz + Voladizo</b>.
+      El tragaluz se descuenta únicamente en los niveles que atraviesa.
     </p>
 
     <div class="tablewrap">
@@ -1477,63 +1546,82 @@ function areas(a){
       <table class="tbl">
 
         <tr>
-
           <th>NIVEL</th>
-
           <th>AÑO<br>APROX.</th>
-
-          <th>ÁREA OCUPADA<br>(m²)</th>
-
+          <th>ÁREA<br>OCUPADA (m²)</th>
           <th>ÁREA NO<br>TECHADA (m²)</th>
-
           <th>TRAGALUZ<br>(m²)</th>
-
           <th>ÁREA<br>TECHADA (m²)</th>
-
           <th>VOLADIZO<br>(m²)</th>
-
           <th>OBS.</th>
-
         </tr>
 
         ${rows}
 
         <tr>
-
-          <th colspan="5">
-            TOTAL
-          </th>
-
-          <th>
-            ${tech.toFixed(2)}
-          </th>
-
-          <th>
-            ${vol.toFixed(2)}
-          </th>
-
+          <th colspan="5">TOTAL</th>
+          <th>${tech.toFixed(2)}</th>
+          <th>${vol.toFixed(2)}</th>
           <th></th>
-
         </tr>
 
       </table>
 
     </div>
 
+    <div class="subsection">
+
+      <h3>TRAGALUCES</h3>
+
+      <p class="hint">
+        Registra las dimensiones del tragaluz y los niveles que atraviesa.
+        El área se calcula automáticamente mediante:
+        <b>Ancho × Largo</b>.
+        Si un tragaluz atraviesa varios pisos, se descuenta en cada uno
+        de esos niveles, pero su área física se registra una sola vez.
+      </p>
+
+      ${tragCards || `
+        <div class="hint">
+          Aún no hay tragaluces registrados.
+        </div>
+      `}
+
+      <button
+        class="btn g"
+        type="button"
+        onclick="addTrag()"
+      >
+        ＋ AGREGAR TRAGALUZ
+      </button>
+
+      <div class="sum" id="tragTotal">
+        <b>Área total de tragaluces:</b>
+        ${tragTotal.toFixed(2)} m²
+        &nbsp; | &nbsp;
+        <b>Cantidad:</b>
+        ${d.trag.length}
+      </div>
+
+    </div>
 
     <div class="subsection">
 
-    <h3>OBSERVACIÓN DE ÁREAS</h3>
+      <h3>OBSERVACIÓN DE ÁREAS</h3>
 
-<div class="f">
-  <textarea
-    id="obsAreas"
-    rows="5"
-    placeholder="Ingrese aquí las observaciones relacionadas con las áreas del inmueble. Ej.: patio delantero, patio posterior, jardín, distribución de áreas, etc."
-    oninput="d.obsAreas=this.value;save(false)"
-    style="width:100%;resize:vertical;"
-  >${d.obsAreas||''}</textarea>
-</div>  
+      <div class="f">
+
+        <textarea
+          id="obsAreas"
+          rows="5"
+          placeholder="Ej.: patio delantero, patio posterior, jardín, distribución de áreas, etc."
+          oninput="d.obsAreas=this.value;save(false)"
+          style="width:100%;resize:vertical;"
+        >${d.obsAreas||''}</textarea>
+
+      </div>
+
+    </div>
 
     `
   );
