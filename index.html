@@ -1229,11 +1229,22 @@ function levels(){
     d.floors.push({
       anio:'',
       base:i===0 ? (d.terreno?.doc||'') : '',
-      patio:'',
+
+      // Áreas no techadas por tipo
+      patioDelantero:'',
+      patioTrasero:'',
+      patioInterior:'',
+      jardin:'',
+      terraza:'',
+
+      // Otros componentes
       trag:'',
       tech:'',
       voladizo:'',
-      obs:''
+      obs:'',
+
+      // Distribución de techos
+      roofs:[]
     });
   }
 
@@ -1242,24 +1253,67 @@ function levels(){
   }
 
   d.floors.forEach((x,i)=>{
+
+    // El primer nivel toma automáticamente el área
+    // según documentación del terreno.
     if(i===0){
-       x.base=d.terreno?.doc||'';
-    }else{
-      if(x.base===undefined) x.base='';
+      x.base=d.terreno?.doc||'';
+    }else if(x.base===undefined){
+      x.base='';
     }
 
-    if(x.patio===undefined) x.patio='';
-    if(x.trag===undefined) x.trag='';
+    if(x.patioDelantero===undefined) x.patioDelantero='';
+    if(x.patioTrasero===undefined) x.patioTrasero='';
+    if(x.patioInterior===undefined) x.patioInterior='';
+    if(x.jardin===undefined) x.jardin='';
+    if(x.terraza===undefined) x.terraza='';
 
+    if(x.trag===undefined) x.trag='';
     if(x.voladizo===undefined) x.voladizo='';
     if(x.anio===undefined) x.anio='';
     if(x.obs===undefined) x.obs='';
 
-    const base=num(x.base);
-    const patio=num(x.patio);
-    const trag=num(x.trag);
+    if(!Array.isArray(x.roofs)){
+      x.roofs=[];
+    }
 
-    x.tech=Math.max(0,base-patio-trag).toFixed(2);
+    // Compatibilidad con el antiguo campo "patio"
+    // Si existía un valor anterior, lo trasladamos
+    // al patio delantero solamente una vez.
+    if(
+      x.patioDelantero==='' &&
+      x.patio!==undefined &&
+      x.patio!==''
+    ){
+      x.patioDelantero=x.patio;
+    }
+
+    const base=num(x.base);
+
+    const patioDelantero=num(x.patioDelantero);
+    const patioTrasero=num(x.patioTrasero);
+    const patioInterior=num(x.patioInterior);
+    const jardin=num(x.jardin);
+    const terraza=num(x.terraza);
+
+    const totalNoTech=
+      patioDelantero+
+      patioTrasero+
+      patioInterior+
+      jardin+
+      terraza;
+
+    const trag=num(x.trag);
+    const voladizo=num(x.voladizo);
+
+    // Área techada del nivel
+    x.tech=Math.max(
+      0,
+      base-totalNoTech-trag+voladizo
+    ).toFixed(2);
+
+    // Guardamos el total para mostrarlo en pantalla
+    x.totalNoTech=totalNoTech.toFixed(2);
   });
 }
 function ordinal(n){let x=['1.er piso','2.º piso','3.er piso','4.º piso','5.º piso','6.º piso','7.º piso','8.º piso','9.º piso','10.º piso','11.º piso','12.º piso'];return x[n-1]||n+'.º piso'}
