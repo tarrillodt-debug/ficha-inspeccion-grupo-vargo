@@ -1279,7 +1279,115 @@ function areas(a){
     },0);
   }
 
+  /* ================================
+     TIPOS DE SOPORTE Y COBERTURA
+     ================================ */
+
+  const soportesTecho=[
+    'Concreto armado',
+    'Estructura metálica',
+    'Estructura de madera',
+    'Otro'
+  ];
+
+  const coberturasTecho=[
+    'Losa aligerada',
+    'Losa maciza',
+    'Calaminón',
+    'Calamina metálica',
+    'Fibrocemento (tipo Eternit)',
+    'Policarbonato',
+    'Teja',
+    'Otro'
+  ];
+
+  /* ================================
+     FILAS DE COBERTURA POR PISO
+     ================================ */
+
+  function coberturaRows(x,i){
+
+    if(!Array.isArray(x.roofs)){
+      x.roofs=[];
+    }
+
+    return x.roofs.map((r,j)=>`
+
+      <div style="
+        display:grid;
+        grid-template-columns:1fr 1.2fr 110px 42px;
+        gap:8px;
+        align-items:center;
+        margin-bottom:8px;
+      ">
+
+        <select
+          onchange="d.floors[${i}].roofs[${j}].support=this.value;save(false);"
+        >
+          <option value="">Soporte...</option>
+
+          ${soportesTecho.map(t=>`
+            <option
+              value="${esc(t)}"
+              ${r.support===t?'selected':''}
+            >
+              ${esc(t)}
+            </option>
+          `).join('')}
+
+        </select>
+
+        <select
+          onchange="d.floors[${i}].roofs[${j}].coverage=this.value;save(false);"
+        >
+          <option value="">Cobertura...</option>
+
+          ${coberturasTecho.map(t=>`
+            <option
+              value="${esc(t)}"
+              ${r.coverage===t?'selected':''}
+            >
+              ${esc(t)}
+            </option>
+          `).join('')}
+
+        </select>
+
+        <input
+          type="text"
+          inputmode="decimal"
+          value="${esc(r.area||'')}"
+          placeholder="Área m²"
+          oninput="
+            d.floors[${i}].roofs[${j}].area=this.value;
+            save(false);
+            actualizarTotalTechos(${i},this);
+          "
+        >
+
+        <button
+          class="btn r"
+          type="button"
+          onclick="eliminarTecho(${i},${j})"
+        >
+          ×
+        </button>
+
+      </div>
+
+    `).join('');
+  }
+
+
+  /* ================================
+     FILAS DE ÁREAS POR NIVEL
+     ================================ */
+
   const rows=d.floors.map((x,i)=>{
+
+    if(!Array.isArray(x.roofs)){
+      x.roofs=[];
+    }
 
     const base=num(x.base);
     const patio=num(x.patio);
@@ -1383,6 +1491,11 @@ function areas(a){
     `;
   }).join('');
 
+
+  /* ================================
+     TOTALES
+     ================================ */
+
   const tech=d.floors.reduce(
     (s,x)=>s+num(x.tech),
     0
@@ -1393,13 +1506,6 @@ function areas(a){
     0
   );
 
-  const ocupadaPrimer=num(d.terreno?.doc);
-  const terrenoDoc=num(d.terreno?.doc);
-
-  d.terreno.libre=Math.max(
-    0,
-    terrenoDoc-ocupadaPrimer
-  ).toFixed(2);
 
   /* ================================
      TRAGALUCES
@@ -1413,7 +1519,10 @@ function areas(a){
     const largo=num(x.largo);
     const area=ancho*largo;
 
-    const maxP=Math.max(1,+d.datos.pisos||1);
+    const maxP=Math.max(
+      1,
+      +d.datos.pisos||1
+    );
 
     const inicio=Math.max(
       1,
@@ -1432,6 +1541,7 @@ function areas(a){
 
         <div class="head">
           <b>Tragaluz ${i+1}</b>
+
           <button
             class="btn r"
             type="button"
@@ -1461,6 +1571,7 @@ function areas(a){
 
           <div class="f">
             <label>Área del tragaluz (m²)</label>
+
             <input
               class="readonly"
               type="text"
@@ -1487,6 +1598,7 @@ function areas(a){
 
           <div class="f">
             <label>N.º de niveles que atraviesa</label>
+
             <input
               class="readonly"
               type="text"
@@ -1506,25 +1618,202 @@ function areas(a){
         </div>
 
         <div class="sum">
+
           <b>Resultado:</b>
-          ${ancho.toFixed(2)} × ${largo.toFixed(2)}
+
+          ${ancho.toFixed(2)}
+          ×
+          ${largo.toFixed(2)}
+
           =
+
           <b>${area.toFixed(2)} m²</b>
+
           &nbsp; | &nbsp;
-          Desde <b>${ordinal(inicio)}</b>
-          hasta <b>${ordinal(fin)}</b>
+
+          Desde
+          <b>${ordinal(inicio)}</b>
+
+          hasta
+          <b>${ordinal(fin)}</b>
+
           &nbsp; | &nbsp;
+
           <b>${niveles}</b> nivel(es)
+
         </div>
 
       </div>
     `;
+
   }).join('');
+
 
   const tragTotal=(d.trag||[]).reduce(
     (sum,x)=>sum+num(x.ancho)*num(x.largo),
     0
   );
+
+
+  /* ================================
+     TARJETAS DE TECHOS POR NIVEL
+     ================================ */
+
+  const techosPorNivel=d.floors.map((x,i)=>{
+
+    if(!Array.isArray(x.roofs)){
+      x.roofs=[];
+    }
+
+    const totalCoberturas=x.roofs.reduce(
+      (sum,r)=>sum+num(r.area),
+      0
+    );
+
+    const areaTechada=num(x.tech);
+
+    const diferencia=
+      totalCoberturas-areaTechada;
+
+    let estado='';
+    let estadoClase='';
+
+    if(areaTechada===0 && totalCoberturas===0){
+
+      estado='Registra las coberturas identificadas en este nivel.';
+
+    }else if(Math.abs(diferencia)<=0.01){
+
+      estado='✓ La suma de coberturas coincide con el área techada.';
+
+      estadoClase='ok';
+
+    }else{
+
+      estado=
+        `⚠️ Diferencia de ${Math.abs(diferencia).toFixed(2)} m². `+
+        `La suma de coberturas debe coincidir con el área techada.`;
+
+      estadoClase='warning';
+
+    }
+
+
+    return `
+
+      <div class="card">
+
+        <div class="head">
+
+          <b>
+            ${ordinal(i+1)}
+            — DISTRIBUCIÓN DE TECHO / COBERTURA
+          </b>
+
+        </div>
+
+
+        <p class="hint">
+
+          <b>Área techada del nivel:</b>
+          ${areaTechada.toFixed(2)} m²
+
+          <br>
+
+          Puedes registrar varios tipos de techo
+          dentro del mismo piso.
+
+        </p>
+
+
+        <div style="
+          background:#f4f7f6;
+          border:1px solid #d9e2df;
+          border-radius:8px;
+          padding:10px;
+          margin-bottom:10px;
+        ">
+
+          <div style="
+            display:grid;
+            grid-template-columns:1fr 1.2fr 110px 42px;
+            gap:8px;
+            margin-bottom:6px;
+            font-size:11px;
+            font-weight:700;
+            color:#53635d;
+          ">
+
+            <div>SISTEMA ESTRUCTURAL / SOPORTE</div>
+            <div>TIPO DE COBERTURA</div>
+            <div>ÁREA (m²)</div>
+            <div></div>
+
+          </div>
+
+
+          ${
+            coberturaRows(x,i)
+            ||
+            `
+              <div class="hint">
+                Aún no hay tipos de techo registrados.
+              </div>
+            `
+          }
+
+
+          <button
+            class="btn"
+            type="button"
+            onclick="agregarTecho(${i})"
+          >
+            ＋ AGREGAR TIPO DE TECHO
+          </button>
+
+
+          <div
+            class="sum"
+            id="totalTechoNivel${i}"
+            style="margin-top:10px;"
+          >
+
+            <b>Total de coberturas:</b>
+            ${totalCoberturas.toFixed(2)} m²
+
+            &nbsp; | &nbsp;
+
+            <b>Área techada:</b>
+            ${areaTechada.toFixed(2)} m²
+
+          </div>
+
+
+          <div
+            id="estadoTechoNivel${i}"
+            style="
+              margin-top:8px;
+              padding:9px;
+              border-radius:7px;
+              font-size:12px;
+              background:${estadoClase==='ok'?'#eef7f1':'#fff4e5'};
+              border:1px solid ${estadoClase==='ok'?'#cbe8de':'#efc889'};
+              color:${estadoClase==='ok'?'#176044':'#8a4b00'};
+            "
+          >
+
+            ${estado}
+
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+
+  }).join('');
+
 
   /* ================================
      MOSTRAR TODO
@@ -1535,57 +1824,153 @@ function areas(a){
     `
 
     <p class="hint">
+
       Cada nivel se registra de manera independiente.
+
       El área techada se calcula automáticamente como:
-      <b>Área ocupada − Área no techada − Tragaluz + Voladizo</b>.
-      El tragaluz se descuenta únicamente en los niveles que atraviesa.
+
+      <b>
+        Área ocupada − Área no techada − Tragaluz + Voladizo
+      </b>.
+
+      El tragaluz se descuenta únicamente
+      en los niveles que atraviesa.
+
     </p>
+
 
     <div class="tablewrap">
 
       <table class="tbl">
 
         <tr>
+
           <th>NIVEL</th>
-          <th>AÑO<br>APROX.</th>
-          <th>ÁREA<br>OCUPADA (m²)</th>
-          <th>ÁREA NO<br>TECHADA (m²)</th>
-          <th>TRAGALUZ<br>(m²)</th>
-          <th>ÁREA<br>TECHADA (m²)</th>
-          <th>VOLADIZO<br>(m²)</th>
+
+          <th>
+            AÑO<br>APROX.
+          </th>
+
+          <th>
+            ÁREA<br>OCUPADA (m²)
+          </th>
+
+          <th>
+            ÁREA NO<br>TECHADA (m²)
+          </th>
+
+          <th>
+            TRAGALUZ<br>(m²)
+          </th>
+
+          <th>
+            ÁREA<br>TECHADA (m²)
+          </th>
+
+          <th>
+            VOLADIZO<br>(m²)
+          </th>
+
           <th>OBS.</th>
+
         </tr>
 
         ${rows}
 
+
         <tr>
-          <th colspan="5">TOTAL</th>
-          <th>${tech.toFixed(2)}</th>
-          <th>${vol.toFixed(2)}</th>
+
+          <th colspan="5">
+            TOTAL
+          </th>
+
+          <th>
+            ${tech.toFixed(2)}
+          </th>
+
+          <th>
+            ${vol.toFixed(2)}
+          </th>
+
           <th></th>
+
         </tr>
 
       </table>
 
     </div>
 
+
+    <!-- ==========================
+         DISTRIBUCIÓN DE TECHOS
+         ========================== -->
+
     <div class="subsection">
 
-      <h3>TRAGALUCES</h3>
+      <h3>
+        TIPO DE TECHO / COBERTURA POR NIVEL
+      </h3>
 
       <p class="hint">
-        Registra las dimensiones del tragaluz y los niveles que atraviesa.
-        El área se calcula automáticamente mediante:
-        <b>Ancho × Largo</b>.
-        Si un tragaluz atraviesa varios pisos, se descuenta en cada uno
-        de esos niveles, pero su área física se registra una sola vez.
+
+        Aquí puedes registrar varios tipos de techo
+        dentro de un mismo nivel.
+
+        Ejemplo:
+
+        <b>
+          50.00 m² de losa aligerada +
+          20.00 m² de calaminón +
+          10.00 m² de policarbonato =
+          80.00 m²
+        </b>.
+
+        La suma se valida automáticamente
+        contra el área techada del nivel.
+
       </p>
 
-      ${tragCards || `
-        <div class="hint">
-          Aún no hay tragaluces registrados.
-        </div>
-      `}
+      ${techosPorNivel}
+
+    </div>
+
+
+    <!-- ==========================
+         TRAGALUCES
+         ========================== -->
+
+    <div class="subsection">
+
+      <h3>
+        TRAGALUCES
+      </h3>
+
+      <p class="hint">
+
+        Registra las dimensiones del tragaluz
+        y los niveles que atraviesa.
+
+        El área se calcula automáticamente mediante:
+
+        <b>Ancho × Largo</b>.
+
+        Si un tragaluz atraviesa varios pisos,
+        se descuenta en cada uno de esos niveles,
+        pero su área física se registra una sola vez.
+
+      </p>
+
+
+      ${
+        tragCards
+        ||
+        `
+          <div class="hint">
+            Aún no hay tragaluces registrados.
+          </div>
+        `
+      }
+
 
       <button
         class="btn g"
@@ -1595,19 +1980,33 @@ function areas(a){
         ＋ AGREGAR TRAGALUZ
       </button>
 
+
       <div class="sum" id="tragTotal">
+
         <b>Área total de tragaluces:</b>
+
         ${tragTotal.toFixed(2)} m²
+
         &nbsp; | &nbsp;
+
         <b>Cantidad:</b>
+
         ${d.trag.length}
+
       </div>
 
     </div>
 
+
+    <!-- ==========================
+         OBSERVACIONES
+         ========================== -->
+
     <div class="subsection">
 
-      <h3>OBSERVACIÓN DE ÁREAS</h3>
+      <h3>
+        OBSERVACIÓN DE ÁREAS
+      </h3>
 
       <div class="f">
 
@@ -1625,6 +2024,116 @@ function areas(a){
 
     `
   );
+}
+
+
+/* ==================================================
+   FUNCIONES PARA TIPOS DE TECHO POR NIVEL
+   ================================================== */
+
+function agregarTecho(i){
+
+  if(!d.floors[i]){
+    return;
+  }
+
+  if(!Array.isArray(d.floors[i].roofs)){
+    d.floors[i].roofs=[];
+  }
+
+  d.floors[i].roofs.push({
+    support:'',
+    coverage:'',
+    area:''
+  });
+
+  save(false);
+  render();
+}
+
+
+function eliminarTecho(i,j){
+
+  if(
+    !d.floors[i] ||
+    !Array.isArray(d.floors[i].roofs)
+  ){
+    return;
+  }
+
+  d.floors[i].roofs.splice(j,1);
+
+  save(false);
+  render();
+}
+
+
+function actualizarTotalTechos(i,input){
+
+  const card=input.closest('.card');
+
+  if(!card || !d.floors[i]){
+    return;
+  }
+
+  const total=(d.floors[i].roofs||[]).reduce(
+    (sum,r)=>sum+num(r.area),
+    0
+  );
+
+  const tech=num(d.floors[i].tech);
+
+  const diferencia=total-tech;
+
+  const totalEl=document.getElementById(
+    'totalTechoNivel'+i
+  );
+
+  const estadoEl=document.getElementById(
+    'estadoTechoNivel'+i
+  );
+
+
+  if(totalEl){
+
+    totalEl.innerHTML=`
+      <b>Total de coberturas:</b>
+      ${total.toFixed(2)} m²
+
+      &nbsp; | &nbsp;
+
+      <b>Área techada:</b>
+      ${tech.toFixed(2)} m²
+    `;
+
+  }
+
+
+  if(estadoEl){
+
+    if(Math.abs(diferencia)<=0.01){
+
+      estadoEl.style.background='#eef7f1';
+      estadoEl.style.borderColor='#cbe8de';
+      estadoEl.style.color='#176044';
+
+      estadoEl.innerHTML=
+        '✓ La suma de coberturas coincide con el área techada.';
+
+    }else{
+
+      estadoEl.style.background='#fff4e5';
+      estadoEl.style.borderColor='#efc889';
+      estadoEl.style.color='#8a4b00';
+
+      estadoEl.innerHTML=
+        `⚠️ Diferencia de ${Math.abs(diferencia).toFixed(2)} m². `+
+        `La suma de coberturas debe coincidir con el área techada.`;
+
+    }
+
+  }
+
 }
 function roofTypes(){return ['Aligerado','Losa maciza','Calamina','Calaminón','Teja','Fibrocemento','Policarbonato','Madera','Otro']}
 function roofRows(x,i){normalizeCons();x.roofs=x.roofs||[];return x.roofs.map((r,j)=>`<div class='roof-row' data-roof-row><select data-roof='tipo' data-ci='${i}' data-ri='${j}'><option value=''>Seleccionar...</option>${roofTypes().map(t=>`<option ${r.tipo===t?'selected':''}>${t}</option>`).join('')}</select><input type='text' inputmode='decimal' data-roof='area' data-ci='${i}' data-ri='${j}' value='${esc(r.area||'')}' placeholder='Área (m²)'><button class='btn r' type='button' onclick='delRoof(${i},${j})'>×</button></div>`).join('')}
