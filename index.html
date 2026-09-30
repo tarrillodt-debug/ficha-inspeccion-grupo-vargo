@@ -1444,17 +1444,32 @@ function areas(a){
     }
 
     const base=num(x.base);
-    const patio=num(x.patio);
-    const trag=tragaluzPiso(i+1);
-    const voladizo=num(x.voladizo);
 
-    const tech=Math.max(
-      0,
-      base-patio-trag+voladizo
-    );
+const patioDelantero=num(x.patioDelantero);
+const patioTrasero=num(x.patioTrasero);
+const patioInterior=num(x.patioInterior);
+const jardin=num(x.jardin);
+const terraza=num(x.terraza);
+
+const totalNoTech=
+  patioDelantero+
+  patioTrasero+
+  patioInterior+
+  jardin+
+  terraza;
+
+const trag=tragaluzPiso(i+1);
+const voladizo=num(x.voladizo);
+
+const tech=Math.max(
+  0,
+  base-totalNoTech-trag+voladizo
+);
+
+x.totalNoTech=totalNoTech.toFixed(2);
+x.tech=tech.toFixed(2);
 
     x.trag=trag.toFixed(2);
-    x.tech=tech.toFixed(2);
 
     return `
       <tr class="area-row">
@@ -1490,16 +1505,12 @@ function areas(a){
 
         <td>
           <input
+            class="readonly"
             type="text"
-            inputmode="decimal"
-            data-a="floors"
-            data-i="${i}"
-            data-f="patio"
-            value="${esc(x.patio||'')}"
-            placeholder="0.00"
+            value="${num(x.totalNoTech).toFixed(2)}"
+            readonly
           >
         </td>
-
         <td>
           <input
             class="readonly"
@@ -1953,7 +1964,108 @@ function areas(a){
       </table>
 
     </div>
+    <!-- ==========================
+         ÁREAS NO TECHADAS POR NIVEL
+         ========================== -->
 
+    <div class="subsection">
+
+      <h3>
+        ÁREAS NO TECHADAS POR NIVEL
+      </h3>
+
+      <p class="hint">
+        Registra únicamente las áreas descubiertas o no techadas
+        correspondientes a cada nivel.
+      </p>
+
+      ${d.floors.map((x,i)=>`
+
+        <div class="card">
+
+          <div class="head">
+            <b>${ordinal(i+1)} — ÁREAS NO TECHADAS</b>
+          </div>
+
+          <div class="grid">
+
+            <div class="f">
+              <label>Patio delantero (m²)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                data-a="floors"
+                data-i="${i}"
+                data-f="patioDelantero"
+                value="${esc(x.patioDelantero||'')}"
+                placeholder="0.00"
+              >
+            </div>
+
+            <div class="f">
+              <label>Patio trasero (m²)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                data-a="floors"
+                data-i="${i}"
+                data-f="patioTrasero"
+                value="${esc(x.patioTrasero||'')}"
+                placeholder="0.00"
+              >
+            </div>
+
+            <div class="f">
+              <label>Patio interior (m²)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                data-a="floors"
+                data-i="${i}"
+                data-f="patioInterior"
+                value="${esc(x.patioInterior||'')}"
+                placeholder="0.00"
+              >
+            </div>
+
+            <div class="f">
+              <label>Jardín (m²)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                data-a="floors"
+                data-i="${i}"
+                data-f="jardin"
+                value="${esc(x.jardin||'')}"
+                placeholder="0.00"
+              >
+            </div>
+
+            <div class="f">
+              <label>Terraza (m²)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                data-a="floors"
+                data-i="${i}"
+                data-f="terraza"
+                value="${esc(x.terraza||'')}"
+                placeholder="0.00"
+              >
+            </div>
+
+          </div>
+
+          <div class="sum">
+            <b>Total área no techada:</b>
+            ${num(x.totalNoTech).toFixed(2)} m²
+          </div>
+
+        </div>
+
+      `).join('')}
+
+    </div>
 
     <!-- ==========================
          DISTRIBUCIÓN DE TECHOS
@@ -2538,17 +2650,88 @@ function updateTerrainCalculatedFields(){
   }
 }
 function updateAreaTotalsOnly(){
-  let cc=0,tt=0,vv=0,oo=0;
+
+  let cc=0;
+  let tt=0;
+  let vv=0;
+  let oo=0;
+
   d.floors.forEach((x,i)=>{
-    const c=num(x.construida), t=num(x.tech), v=i===0?0:num(x.voladizo), o=Math.max(0,c-v);
-    x.ocup=o.toFixed(2); cc+=c;tt+=t;vv+=v;oo+=o;
+
+    const c=num(x.construida);
+
+    const patioDelantero=num(x.patioDelantero);
+    const patioTrasero=num(x.patioTrasero);
+    const patioInterior=num(x.patioInterior);
+    const jardin=num(x.jardin);
+    const terraza=num(x.terraza);
+
+    const totalNoTech=
+      patioDelantero+
+      patioTrasero+
+      patioInterior+
+      jardin+
+      terraza;
+
+    const trag= num(x.trag);
+    const vol= i===0 ? 0 : num(x.voladizo);
+
+    const base=num(x.base);
+
+    const tech=Math.max(
+      0,
+      base-totalNoTech-trag+vol
+    );
+
+    x.totalNoTech=totalNoTech.toFixed(2);
+    x.tech=tech.toFixed(2);
+
+    const ocup=Math.max(
+      0,
+      c-vol
+    );
+
+    x.ocup=ocup.toFixed(2);
+
+    cc+=c;
+    tt+=tech;
+    vv+=vol;
+    oo+=ocup;
+
+    const totalNoTechEl=
+      document.getElementById('totalNoTechNivel'+i);
+
+    if(totalNoTechEl){
+      totalNoTechEl.textContent=
+        totalNoTech.toFixed(2)+' m²';
+    }
+
   });
-  if(document.getElementById("totalBuilt")) document.getElementById("totalBuilt").textContent=cc.toFixed(2);
-  if(document.getElementById("totalTech")) document.getElementById("totalTech").textContent=tt.toFixed(2);
-  if(document.getElementById("totalVol")) document.getElementById("totalVol").textContent=vv.toFixed(2);
-  if(document.getElementById("totalOcup")) document.getElementById("totalOcup").textContent=oo.toFixed(2);
-  const inp=document.querySelector('[data-a="floors"][data-i="0"][data-f="ocup"]');
-  if(inp)inp.value=d.floors[0]?.ocup||'0.00';
+
+  if(document.getElementById("totalBuilt"))
+    document.getElementById("totalBuilt").textContent=
+      cc.toFixed(2);
+
+  if(document.getElementById("totalTech"))
+    document.getElementById("totalTech").textContent=
+      tt.toFixed(2);
+
+  if(document.getElementById("totalVol"))
+    document.getElementById("totalVol").textContent=
+      vv.toFixed(2);
+
+  if(document.getElementById("totalOcup"))
+    document.getElementById("totalOcup").textContent=
+      oo.toFixed(2);
+
+  const inp=
+    document.querySelector(
+      '[data-a="floors"][data-i="0"][data-f="ocup"]'
+    );
+
+  if(inp)
+    inp.value=d.floors[0]?.ocup||'0.00';
+
   updateTerrainCalculatedFields();
 }
 function save(show=true){localStorage.setItem('vargoFicha',JSON.stringify(d));if(show)alert('Ficha guardada correctamente en este dispositivo.')}function clearAll(){if(confirm('¿Borrar toda la ficha?')){localStorage.removeItem('vargoFicha');location.reload()}}function makePrintClean(source){
