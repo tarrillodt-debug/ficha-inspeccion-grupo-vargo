@@ -2405,7 +2405,37 @@ function amb(a){
       <div class='f'><label>Tipo de ambiente</label><select onchange="d.amb[${i}].items[${j}].tipo=this.value;d.amb[${i}].items[${j}].bano='';save(false);render()"><option value=''>Seleccionar...</option>${names.map(n=>`<option ${r.tipo===n?'selected':''}>${n}</option>`).join('')}</select></div>
       <div class='f'><label>Cantidad</label><input type='number' min='1' step='1' value='${r.cantidad||1}' onchange="d.amb[${i}].items[${j}].cantidad=this.value;save(false)"></div>
       <div class='f'><label>Observación (opcional)</label><input value='${esc(r.obs||'')}' onchange="d.amb[${i}].items[${j}].obs=this.value;save(false)"></div>
-      ${r.tipo==='Dormitorio'?`<div class='f'><label>Baño incorporado</label><select onchange="d.amb[${i}].items[${j}].bano=this.value;save(false);render()"><option value='' ${!r.bano?'selected':''}>Seleccionar...</option><option value='Sí' ${r.bano==='Sí'?'selected':''}>Con baño incorporado</option><option value='No' ${r.bano==='No'?'selected':''}>Sin baño</option></select></div>`:''}
+     ${[
+  'Dormitorio',
+  'Dormitorio principal',
+  'Dormitorio principal con closet',
+  'Dormitorio con closet'
+].includes(r.tipo)?`
+  <div class='f'>
+    <label>Baño incorporado</label>
+    <select
+      onchange="d.amb[${i}].items[${j}].bano=this.value;save(false);render()"
+    >
+      <option value='' ${!r.bano?'selected':''}>
+        Seleccionar...
+      </option>
+
+      <option
+        value='Sí'
+        ${r.bano==='Sí'?'selected':''}
+      >
+        Con baño
+      </option>
+
+      <option
+        value='No'
+        ${r.bano==='No'?'selected':''}
+      >
+        Sin baño
+      </option>
+    </select>
+  </div>
+`:''}
       <button class='btn r amb-del' type='button' onclick='d.amb[${i}].items.splice(${j},1);save(false);render()'>×</button>
     </div>`).join('');
   a.innerHTML=sec('5. DISTRIBUCIÓN DE AMBIENTES',`<p class='hint'>Selecciona los ambientes existentes. No se solicitan medidas interiores en esta pestaña; solo se registra la distribución y cantidad por piso.</p>`+d.amb.map((x,i)=>`<div class='card'><div class='head'>${ordinal(i+1)}</div><div class='amb-list'>${rows(x,i)||'<p class="hint">Aún no hay ambientes registrados en este piso.</p>'}</div><button class='btn' type='button' onclick='d.amb[${i}].items.push({tipo:"",cantidad:1,obs:"",bano:""});save(false);render()'>＋ AGREGAR AMBIENTE</button></div>`).join(''));
