@@ -2713,19 +2713,53 @@ function updateAreaTotalsOnly(){
 
   updateTerrainCalculatedFields();
 }
-function save(show=true){localStorage.setItem('vargoFicha',JSON.stringify(d));if(show)alert('Ficha guardada correctamente en este dispositivo.')}function clearAll(){if(confirm('¿Borrar toda la ficha?')){localStorage.removeItem('vargoFicha');location.reload()}}function makePrintClean(source){
+function save(show=true){localStorage.setItem('vargoFicha',JSON.stringify(d));if(show)alert('Ficha guardada correctamente en este dispositivo.')}function clearAll(){if(confirm('¿Borrar toda la ficha?')){localStorage.removeItem('vargoFicha');location.reload()}}
+function makePrintClean(source){
   const clone=source.cloneNode(true);
 
-  clone.querySelectorAll("button,.btn,.hint,.noprint,.delete,.r").forEach(x=>x.remove());
+  clone.querySelectorAll(
+    "button,.btn,.hint,.noprint,.delete,.r"
+  ).forEach(x=>x.remove());
+
+  clone.querySelectorAll(".f").forEach(field=>{
+    const control=field.querySelector("input,select,textarea");
+
+    if(!control) return;
+
+    let value="";
+
+    if(control.tagName==="SELECT"){
+      const opt=control.options[control.selectedIndex];
+      value=opt ? opt.textContent.trim() : "";
+
+      if(
+        !control.value ||
+        value==="Seleccionar..." ||
+        value==="Seleccionar"
+      ){
+        field.remove();
+        return;
+      }
+    }else{
+      value=(control.value || "").trim();
+
+      if(!value){
+        field.remove();
+        return;
+      }
+    }
+  });
 
   clone.querySelectorAll("input,select,textarea").forEach(el=>{
     let value="";
+
     if(el.tagName==="SELECT"){
       const opt=el.options[el.selectedIndex];
       value=opt ? opt.textContent.trim() : "";
     }else{
       value=el.value || el.getAttribute("value") || "";
     }
+
     const span=document.createElement("span");
     span.textContent=value;
     span.className="print-value";
@@ -2733,14 +2767,20 @@ function save(show=true){localStorage.setItem('vargoFicha',JSON.stringify(d));if
   });
 
   clone.querySelectorAll("[contenteditable='true']").forEach(el=>{
+    const value=el.textContent.trim();
+
+    if(!value){
+      el.remove();
+      return;
+    }
+
     const span=document.createElement("span");
-    span.textContent=el.textContent.trim();
+    span.textContent=value;
     el.replaceWith(span);
   });
 
   return clone;
 }
-
 function pdf(){
   save(false);
   const originalPage=page;
