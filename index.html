@@ -2361,7 +2361,34 @@ function addTrag(){d.trag=d.trag||[];const ini=d.trag.length?d.trag[d.trag.lengt
 function delTrag(i){d.trag.splice(i,1);save(false);render()}
 function amb(a){
   levels();
-  const names=['Sala','Comedor','Cocina','Dormitorio','Baño','Medio baño','Lavandería','Estudio','Oficina','Tienda','Almacén','Depósito','Cochera','Patio','Terraza','Azotea','Hall / ingreso','Pasadizo','Escalera','Otro'];
+  const names=[const names=[
+  'Sala',
+  'Comedor',
+  'Cocina',
+  'Dormitorio',
+  'Medio baño',
+  'Lavandería',
+  'Tienda',
+  'Cochera',
+  'Patio',
+  'Terraza',
+  'Azotea',
+  'Hall / ingreso',
+  'Escalera',
+  'Balcón',
+  'Cuarto de servicio',
+  'Dormitorio principal con closet',
+  'Dormitorio principal',
+  'Baño completo',
+  'Habitación de estudio',
+  'Ambiente de almacén',
+  'Sótano',
+  'Sala-comedor',
+  'Cocina-comedor',
+  'Sala-comedor-cocina',
+  'Dormitorio con closet',
+  'Otro'
+];
   d.amb=Array.from({length:d.floors.length},(_,i)=>{
     const old=d.amb&&d.amb[i];
     if(old&&Array.isArray(old.items)) return old;
