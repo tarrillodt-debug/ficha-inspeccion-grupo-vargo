@@ -2800,44 +2800,6 @@ function pdf(){
     print.appendChild(clean);
   });
 
-  const photoSection=document.createElement("section");
-  photoSection.className="sec";
-  const photoFolders=[
-    {id:"fachada",label:"0. FACHADA"},
-    {id:"medidor",label:"1. MEDIDOR"},
-    {id:"interior",label:"2. INTERIOR"},
-    {id:"referencias",label:"REFERENCIAS"}
-  ];
-  let photoHtml=`<h2>8. FOTOGRAFÍAS</h2><div class="body">`;
-  if(!d.photos || !d.photos.length){
-    photoHtml+=`<p>No se registraron fotografías.</p>`;
-  }else{
-    photoFolders.forEach(folder=>{
-      const items=d.photos.map((p,i)=>({...p,i})).filter(p=>(p.folder||"fachada")===folder.id);
-      if(!items.length)return;
-      photoHtml+=`<div class="photo-pdf-folder"><h3>${folder.label}</h3><div class="photo-pdf-grid">`;
-      items.forEach(p=>{
-        photoHtml+=`<div class="photo">
-          <div><b>Foto ${p.i+1}</b></div>
-          ${(p.folder||"fachada")==="referencias" ? `
-          ${p.area?`<div><b>Área:</b> ${esc(p.area)} m²</div>`:""}
-          ${p.coord?`<div><b>Coordenadas:</b> ${esc(p.coord)}</div>`:""}
-          ${p.cel?`<div><b>Celular / teléfono:</b> ${esc(p.cel)}</div>`:""}
-          ${p.precio?`<div><b>Precio:</b> ${esc(p.precio)}</div>`:""}
-          ${p.entorno?`<div><b>Descripción del entorno:</b> ${esc(p.entorno)}</div>`:""}
-          ` : `
-          ${p.desc?`<div><b>Descripción:</b> ${esc(p.desc)}</div>`:""}
-          ${p.ubi?`<div><b>Ubicación:</b> ${esc(p.ubi)}</div>`:""}`}
-          <img src="${p.src}" alt="Foto ${p.i+1}">
-        </div>`;
-      });
-      photoHtml+=`</div></div>`;
-    });
-  }
-  photoHtml+=`</div>`;
-  photoSection.innerHTML=photoHtml;
-  print.appendChild(photoSection);
-
   const footer=document.createElement("div");
   footer.className="print-footer";
   footer.textContent="Grupo Vargo · Ficha de inspección · Documento generado a partir de la información registrada en la inspección.";
